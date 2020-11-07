@@ -1,4 +1,10 @@
 
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/ElianHugh/templater/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/templater/actions)
+<!-- badges: end -->
+
 # templater
 
 *{templater}* is an attempt to bring rmarkdown template usage to
