@@ -25,6 +25,3 @@ Imports:
     shinyjs,
     stringr,
     shinythemes
-Suggests:
-    testthat
-    lintr
