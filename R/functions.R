@@ -21,29 +21,26 @@ get_package_templates <- function() {
     temp_name_pat <- "[A-Za-z0-9_ ]+(?=/+template.yaml)"
     paths <- get_paths(.libPaths(), "*template.yaml")
 
-    temp_frame <- paths %>%
-        purrr::map_df(yaml::read_yaml) %>%
-        tibble::add_column(paths) %>%
-        dplyr::mutate(
-            Pkg = stats::na.omit(((stringr::str_extract(paths, pattern)))),
-            Temp = stats::na.omit(stringr::str_extract(paths, temp_name_pat)),
-            Package = dplyr::case_when(
-                Pkg == 0 ~ "rmarkdown",
-                TRUE ~ Pkg),
-            PkgDisplay = paste0("{", Package, "}"),
-            ShortName = dplyr::case_when(
-                nchar(name) > 30 ~ paste0(substr(
-                    name,
-                    start = 1,
-                    stop = 30),
-                    "..."),
-                TRUE ~ name
-                )
-        ) %>%
-        dplyr::filter(!grepl("templater", Package)) %>%
-        dplyr::rename(Name = name, Description = description) %>%
-        dplyr::relocate(ShortName, everything())
-    return(temp_frame)
+    # Appeasing R CMD check
+    Package <- NULL
+
+    if(!is.null(paths) | length(paths) > 0) {
+        temp_frame <- paths %>%
+            purrr::map_df(yaml::read_yaml) %>%
+            tibble::add_column(paths) %>%
+            dplyr::mutate(
+                Temp = stats::na.omit(stringr::str_extract(paths, temp_name_pat)),
+                Package = dplyr::case_when(
+                    stats::na.omit(((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
+                    TRUE ~ stats::na.omit(((stringr::str_extract(paths, pattern))))
+                ),
+                PkgDisplay = paste0("{", Package, "}"),
+            ) %>%
+            dplyr::filter(!grepl("templater", Package))
+        return(temp_frame)
+    } else {
+        NULL
+    }
 }
 
 
@@ -69,33 +66,26 @@ get_other_templates  <- function() {
     temp_name_pat <- "[A-Za-z0-9_ ]+(?=/+template.yaml)"
     paths <- get_paths(.libPaths(), "*template.yaml")
 
-    temp_frame <- paths %>%
-        purrr::map_df(yaml::read_yaml) %>%
-        tibble::add_column(paths) %>%
-        dplyr::mutate(
-            Pkg = stats::na.omit(((stringr::str_extract(paths, pattern)))),
-            Temp = stats::na.omit(stringr::str_extract(paths, temp_name_pat)),
-            Package = dplyr::case_when(
-                Pkg == 0 ~ "rmarkdown",
-                TRUE ~ Pkg)
-        )  %>%
-        dplyr::filter(grepl("templater", Package)) %>%
-        dplyr::mutate(
-            PkgDisplay = dplyr::case_when(
-                grepl("basic", Temp) ~ paste0("{", Package, "}"),
-                TRUE ~ "{custom}"),
-            ShortName = dplyr::case_when(
-                nchar(name) > 30 ~ paste0(substr(
-                    name,
-                    start = 1,
-                    stop = 30),
-                    "..."),
-                TRUE ~ name
-            )
-        ) %>%
-        dplyr::rename(Name = name, Description = description) %>%
-            dplyr::relocate(ShortName, everything())
-    return(temp_frame)
+  # Appeasing R CMD check
+  Package <- NULL
+
+  if (!is.null(paths) | length(paths) > 0) {
+      temp_frame <- paths %>%
+          purrr::map_df(yaml::read_yaml) %>%
+          tibble::add_column(paths) %>%
+          dplyr::mutate(
+              Temp = stats::na.omit(stringr::str_extract(paths, temp_name_pat)),
+              Package = dplyr::case_when(
+                  stats::na.omit(((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
+                  TRUE ~ stats::na.omit(((stringr::str_extract(paths, pattern))))
+              ),
+              PkgDisplay = paste0("{", Package, "}"),
+          ) %>%
+          dplyr::filter(grepl("templater", Package))
+      return(temp_frame)
+  } else {
+      NULL
+  }
 }
 
 use_template  <- function(loc, s, name, check, curr_data) {

@@ -78,7 +78,7 @@ templater_table <- function(data) {
             ),
             rowCallback = DT::JS(
             "function(row, data) {",
-            "var full_text = data[2]",
+            "var full_text = data[1]",
             "$('td', row).attr('title', full_text);",
             "}"),
             scroller = TRUE,
@@ -90,7 +90,7 @@ templater_table <- function(data) {
             columnDefs = list(
                 list(
                     visible = FALSE,
-                    targets = c(1, 2, 3, 4, 5, 6, 7)
+                    targets = c(1, 2, 3, 4, 5)
                 )
             )
         )

@@ -24,4 +24,8 @@ Imports:
     fs,
     shinyjs,
     stringr,
-    shinythemes
+    shinythemes,
+    rstudioapi,
+    rmarkdown
+Suggests:
+    testthat
