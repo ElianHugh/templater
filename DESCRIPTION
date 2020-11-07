@@ -22,7 +22,8 @@ Imports:
     easycsv,
     tibble,
     magrittr,
-    shinyWidgets,
-    fs
+    fs,
+    shinyjs,
+    stringr
 Suggests:
     testthat
