@@ -1,0 +1,4 @@
+name: Basic Word
+description: >
+  A basic markdown template for Word outputs.
+create_dir: false

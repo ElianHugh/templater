@@ -1,0 +1,4 @@
+name: Basic PDF
+description: >
+  A basic markdown template for PDF outputs.
+create_dir: false

@@ -1,0 +1,4 @@
+name: Basic Beamer
+description: >
+  A basic markdown template for beamer presentations.
+create_dir: false

@@ -1,0 +1,12 @@
+---
+title: "Untitled"
+author: "Name"
+date: "Date"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+

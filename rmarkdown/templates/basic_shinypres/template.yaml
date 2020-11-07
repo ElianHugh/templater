@@ -1,0 +1,4 @@
+name: Basic ShinyPres
+description: >
+  A basic markdown template for Shiny presentations.
+create_dir: false

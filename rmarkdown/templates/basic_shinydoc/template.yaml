@@ -1,0 +1,4 @@
+name: Basic ShinyDoc
+description: >
+  A basic markdown template for interactive Shiny outputs.
+create_dir: false
