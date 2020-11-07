@@ -1,8 +1,8 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/ElianHugh/templater/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/templater/actions)
+[![Build](https://travis-ci.com/ElianHugh/templater.svg?token=gH35B76qsVbgqgsMRb83&branch=master)](https://travis-ci.com/ElianHugh/templater)
+[![R-CMD-Check](https://github.com/ElianHugh/templater/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/templater/actions)
 <!-- badges: end -->
 
 # templater
@@ -23,16 +23,37 @@ hope that it might find some use amongst vscode users.
 
 Install with:
 
-    remotes::install_github("ElianHugh/templater")
+``` r
+remotes::install_github("ElianHugh/templater")
+```
 
-# Usage
-
-## Calling Templater
+# Opening Templater
 
 *{templater}* can be called by first loading it into your r session and
 then running its shiny app
 
-    library(templater)
-    templater()
+``` r
+library(templater)
+templater()
+```
 
 Alternatively, you can call *{templater}* through the addin interface.
+
+# Template Usage
+
+Templates can be found under the “Use Templates” tab, with a choice
+between package templates (i.e. templates derived from installed
+packages) and *{templater}* templates (including any custom templates).
+
+Once you have selected a template, input a file name and choose where to
+save the file. Clicking confirm will close templater and open up the new
+rmarkdown file.
+
+# Template Creation
+
+You can also use *{templater}* to create templates for later use.
+Navigate to the “Create Templates” tab, and type in your new template’s
+name, description, and body.
+
+The body contains *both* the YAML header and rmarkdown body. When
+writing the body, make sure you include the YAML header first.
