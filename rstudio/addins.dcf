@@ -1,0 +1,4 @@
+Name: Create rmarkdown
+Description: Create a new rmarkdown file from a template
+Binding: templater
+Interactive: interactive

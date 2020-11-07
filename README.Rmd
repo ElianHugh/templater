@@ -3,7 +3,8 @@ output: github_document
 ---
 
 <!-- badges: start -->
-[![R build status](https://github.com/ElianHugh/templater/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/templater/actions)
+[![Build](https://travis-ci.com/ElianHugh/templater.svg?token=gH35B76qsVbgqgsMRb83&branch=master)](https://travis-ci.com/ElianHugh/templater)
+[![R-CMD-Check](https://github.com/ElianHugh/templater/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/templater/actions)
 <!-- badges: end -->
 
 # templater
@@ -21,7 +22,6 @@ remotes::install_github("ElianHugh/templater")
 ```
 
 # Usage
-## Calling Templater
 
 *{templater}* can be called by first loading it into your r session and then running its shiny app
 
