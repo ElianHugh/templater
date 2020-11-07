@@ -3,6 +3,7 @@
 
 [![Build](https://travis-ci.com/ElianHugh/templater.svg?token=gH35B76qsVbgqgsMRb83&branch=master)](https://travis-ci.com/ElianHugh/templater)
 [![R-CMD-Check](https://github.com/ElianHugh/templater/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/templater/actions)
+[![codecov](https://codecov.io/gh/ElianHugh/templater/branch/master/graph/badge.svg?token=7BXS4HSBDX)](https://codecov.io/gh/ElianHugh/templater)
 <!-- badges: end -->
 
 # templater
