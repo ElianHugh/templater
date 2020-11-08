@@ -47,4 +47,7 @@ test_that("check_input() detects input correctly", {
     input$template_desc_input <- NULL
     input$rmd_input <- NULL
     expect_false(check_input(input))
+    input$template_name_input <- "test d|sallowed ch@racter"
+    input$template_desc_input <- ""
+    expect_false(check_input(input))
 })

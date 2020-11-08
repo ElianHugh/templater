@@ -1,4 +1,14 @@
 
+get_yaml <- function(path) {
+    x <- yaml::read_yaml(path)
+    if(is.null(x)) {
+        x$name <- "Faulty YAML"
+        x$description <- "Faulty YAML"
+    }
+    x$path <- path
+    return(x)
+}
+
 #' @title get package templates
 #' @description Find all package templates stored locally on the computer,
 #' return a dataframe for later use.
@@ -26,13 +36,12 @@ get_package_templates <- function() {
 
     if(!is.null(paths) | length(paths) > 0) {
         temp_frame <- paths %>%
-            purrr::map_df(yaml::read_yaml) %>%
-            tibble::add_column(paths) %>%
+            purrr::map_df(get_yaml) %>%
             dplyr::mutate(
-                Temp = stats::na.omit(stringr::str_extract(paths, temp_name_pat)),
+                Temp = (stringr::str_extract(paths, temp_name_pat)),
                 Package = dplyr::case_when(
-                    stats::na.omit(((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
-                    TRUE ~ stats::na.omit(((stringr::str_extract(paths, pattern))))
+                    (((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
+                    TRUE ~ (((stringr::str_extract(paths, pattern))))
                 ),
                 PkgDisplay = paste0("{", Package, "}"),
             ) %>%
@@ -69,23 +78,22 @@ get_other_templates  <- function() {
   # Appeasing R CMD check
   Package <- NULL
 
-  if (!is.null(paths) | length(paths) > 0) {
-      temp_frame <- paths %>%
-          purrr::map_df(yaml::read_yaml) %>%
-          tibble::add_column(paths) %>%
-          dplyr::mutate(
-              Temp = stats::na.omit(stringr::str_extract(paths, temp_name_pat)),
-              Package = dplyr::case_when(
-                  stats::na.omit(((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
-                  TRUE ~ stats::na.omit(((stringr::str_extract(paths, pattern))))
-              ),
-              PkgDisplay = paste0("{", Package, "}"),
-          ) %>%
-          dplyr::filter(grepl("templater", Package))
-      return(temp_frame)
-  } else {
-      NULL
-  }
+  if(!is.null(paths) | length(paths) > 0) {
+        temp_frame <- paths %>%
+            purrr::map_df(get_yaml) %>%
+            dplyr::mutate(
+                Temp = (stringr::str_extract(paths, temp_name_pat)),
+                Package = dplyr::case_when(
+                    (((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
+                    TRUE ~ (((stringr::str_extract(paths, pattern))))
+                ),
+                PkgDisplay = paste0("{", Package, "}"),
+            ) %>%
+            dplyr::filter(grepl("templater", Package))
+        return(temp_frame)
+    } else {
+        NULL
+    }
 }
 
 use_template  <- function(loc, s, name, check, curr_data) {
@@ -104,17 +112,26 @@ use_template  <- function(loc, s, name, check, curr_data) {
         create_dir = check
     )
 
-    if (fs::file_exists(file_path)) {
-        rstudioapi::showDialog(
-            title = "Templator",
-            "created document."
-        )
-        rstudioapi::navigateToFile(file_path)
+    # Ensure function works without rstudioapi
+    if(isNamespaceLoaded("rstudioapi")) {
+        if (fs::file_exists(file_path)) {
+            rstudioapi::showDialog(
+                title = "Templator",
+                "created document."
+            )
+            rstudioapi::navigateToFile(file_path)
+        } else {
+            rstudioapi::showDialog(
+                title = "Templator",
+                "error in document creation.."
+            )
+        }
     } else {
-        rstudioapi::showDialog(
-            title = "Templator",
-            "error in document creation.."
-        )
+        if (fs::file_exists(file_path)) {
+            message("templater created document at: ", file_path)
+        } else {
+            message("templater: error in document creation...")
+        }
     }
 }
 
@@ -158,17 +175,31 @@ create_custom_template <- function(input) {
     writeLines(temp_skel_lines, skeleton_file)
     writeLines(temp_yaml_lines, yaml_file)
 
-    if (fs::file_exists(skeleton_file)) {
-        rstudioapi::showDialog(
-            title = "Templator",
-            "created template"
-        )
+    # Utilise rstudioapi if loaded
+    if(isNamespaceLoaded("rstudioapi")) {
+        if (fs::file_exists(skeleton_file)) {
+            rstudioapi::showDialog(
+                title = "Templator",
+                "created template"
+            )
+        } else {
+            rstudioapi::showDialog(
+                title = "Templator",
+                "there was an error during template creation."
+            )
+        }
     } else {
-        rstudioapi::showDialog(
-            title = "Templator",
-            "there was an error during template creation."
-        )
+         if (fs::file_exists(skeleton_file)) {
+            message("Templater: created template")
+             rstudioapi::showDialog(
+                 title = "Templator",
+                 "created template"
+             )
+         } else {
+             message("Templater: there was an error during template creation.")
+         }
     }
+
 
 }
 

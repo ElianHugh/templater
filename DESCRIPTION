@@ -25,7 +25,7 @@ Imports:
     shinyjs,
     stringr,
     shinythemes,
-    rstudioapi,
     rmarkdown
 Suggests:
-    testthat
+    testthat,
+    rstudioapi

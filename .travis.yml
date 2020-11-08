@@ -5,6 +5,10 @@ r:
   - release
   - devel
 
+r-packages:
+  - covr
+  - lintr
+
 after_success:
   - R CMD INSTALL $PKG_TARBALL
   - Rscript -e 'lintr::lint_package()'
