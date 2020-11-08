@@ -100,10 +100,13 @@ templater_table <- function(data) {
 templater_creator <- function() {
     shiny::wellPanel(
         shiny::p(shiny::strong("Template Name")),
-        shiny::textInput(
-            "template_name_input",
-            label = NULL,
-            placeholder = "untitled"
+        shiny::tags$input(
+                placeholder = "untitled",
+                class = "form-control",
+                type = "text",
+                pattern = "[(a-zA-Z0-9_ )]*",
+                title = "Must be a valid file name.",
+                id = "template_name_input",
         ),
         shiny::p(shiny::strong("Template Description")),
         shiny::textAreaInput(

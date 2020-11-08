@@ -200,7 +200,8 @@ check_input <- function(input) {
            return(FALSE)
        } else if (input$template_name_input != "" &&
         input$template_desc_input != "" &&
-        input$rmd_input != "") {
+        input$rmd_input != "" &&
+        !grepl(input$template_name_input, pattern = "[^(a-zA-Z0-9_ ]", perl = TRUE)){
         return(TRUE)
     } else {
         return(FALSE)
