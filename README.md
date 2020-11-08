@@ -42,7 +42,8 @@ library(templater)
 templater()
 ```
 
-Alternatively, you can call *{templater}* through the addin interface.
+Alternatively, you can call *{templater}* through the addin interface,
+meaning you don’t have to make a library call.
 
 # Template Usage
 
