@@ -18,7 +18,11 @@ templates. *{templater}* also allows for the creation of user-templates,
 which are stored alongside the package’s templates.
 
 *{templater}* is unlikely to be useful for those using RStudio, but I
-hope that it might find some use amongst vscode users.
+hope that it might find some use amongst vscode users. For extra
+functionality (e.g. navigating to new files, IDE dialog, etc.) I am
+using the new rstudioapi emulation employed by VSCode-R, so there
+shouldn’t be any difference in templater functionality between the two
+IDEs.
 
 # Installation
 
