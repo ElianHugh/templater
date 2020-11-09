@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/gh/ElianHugh/templater/branch/master/graph/badge.svg?token=7BXS4HSBDX)](https://codecov.io/gh/ElianHugh/templater)
 <!-- badges: end -->
 
-# templater
+# templater - WORK IN PROGRESS
 
 *{templater}* is an attempt to bring rmarkdown template usage to
 [VSCode-R](https://github.com/Ikuyadeu/vscode-R). *{templater}* scans
