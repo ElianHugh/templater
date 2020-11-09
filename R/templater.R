@@ -16,10 +16,10 @@
 templater <- function() {
     wd <- if(!is.null(getwd())) getwd() else ""
     ui <- templater_ui(wd)
-
-    server <- function(input, output, session) {
             rmd   <- get_package_templates()
             other <- get_other_templates()
+
+    server <- function(input, output, session) {
 
             # Reactive Variables
             curr_path <- shiny::reactive({
@@ -60,16 +60,15 @@ templater <- function() {
                 templater_table(curr_data())
             })
 
+            # * TODO correct the logic here
             ## Reactive confirm
             shiny::observe({
-                shinyjs::toggleState("conf", check_valid(input, curr_path()))
+                if(input$nav != "Create Templates") {
+                shinyjs::toggleState("done", check_valid(input, curr_path()))
+                } else {
+                shinyjs::toggleState("done", check_input(input))
+                }
             })
-
-            ## Reactive Generate
-            shiny::observe({
-                shinyjs::toggleState("gen", check_input(input))
-            })
-
 
             ## Tick Event
             shiny::observeEvent(input$table_rows_selected, {
@@ -96,14 +95,8 @@ templater <- function() {
             })
 
             ## Confirm
-            shiny::observeEvent(input$gen, {
-                    create_custom_template(input)
-                    shiny::stopApp(returnValue = invisible())
-
-            })
-
-            ## Confirm
-            shiny::observeEvent(input$conf, {
+            shiny::observeEvent(input$done, {
+                if (input$nav != "Create Templates") {
                     use_template(
                         loc   = input$dir_input,
                         s     = input$table_rows_selected,
@@ -112,17 +105,17 @@ templater <- function() {
                         curr_data
                     )
                     shiny::stopApp(returnValue = invisible())
+                } else {
+                    create_custom_template(input)
+                    shiny::stopApp(returnValue = invisible())
+                }
             })
 
-            ## Close App
-            shiny::observeEvent(input$can | input$can2, {
-                shiny::stopApp(returnValue = invisible())
-            }, ignoreInit = TRUE)
-
             # Exit Handle
-            ## Auto-kill app
+            ## Auto-kill app '
+            # (ensures app doesn't continue running)
             session$onSessionEnded(shiny::stopApp)
     }
 
-    shiny::shinyApp(ui, server)
+    shiny::runGadget(shiny::shinyApp(ui, server))
 }

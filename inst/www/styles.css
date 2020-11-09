@@ -48,10 +48,6 @@ user-select: none; /* Standard */
     overflow: hidden !important;
 }
 
-.well {
-    padding-top: 5px;
-   /**padding-bottom: 0px;**/
-}
 
  .btn {
     padding: 0px 15px;
@@ -74,7 +70,7 @@ input:invalid {
 }
 
 input, .form-control {
-    border: 1px solid black !important;
+    border: 1px white !important;
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -87,12 +83,4 @@ input:focus:not(:invalid) {
      box-shadow: 0px 0px 14px #4195fc !important;
     -moz-box-shadow: 0px 0px 14px #4195fc !important;
     -webkit-box-shadow: 0px 0px 14px #4195fc !important;
-}
-
-.well {
-    margin-bottom: 10px !important;
-}
-
-.btn {
-    margin-bottom: 20px;
 }

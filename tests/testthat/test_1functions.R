@@ -1,5 +1,4 @@
 test_that("get_package_templates() functions correctly", {
-    skip_on_ci()
     rmd <- get_package_templates()
     expect_false(is.null(rmd))
     rmd <- rmd %>%
@@ -7,17 +6,14 @@ test_that("get_package_templates() functions correctly", {
     expect_length(rmd$Package, 0)
 })
 
-# * TODO better test
-# test_that("get_other_templates() functions correctly", {
-#     other <- get_other_templates()
-#     message(other)
-#     skip_if_not_installed("templater")
-#     expect_gt(length(other$Package), 0)
+test_that("get_other_templates() functions correctly", {
+    other <- get_other_templates()
+    expect_false(is.null(other))
+    other <- other %>%
+        dplyr::filter(Package != "templater")
+    expect_length(other$Package, 0)
+})
 
-#     other <- other %>%
-#         dplyr::filter(Package != "templater")
-#     expect_length(other$Package, 0)
-# })
 
 test_that("get_paths() returns file paths", {
     paths <- get_paths(.libPaths(), "*template.yaml")
@@ -50,4 +46,18 @@ test_that("check_input() detects input correctly", {
     input$template_name_input <- "test d|sallowed ch@racter"
     input$template_desc_input <- ""
     expect_false(check_input(input))
+})
+
+test_that("get_yaml() functions correctly", {
+    expect_error(get_yaml())
+
+    x <- get_yaml(("../testdata/Faulty_YAML/template.yaml"))
+    expect_equal(x$name, "Faulty YAML")
+    expect_equal(x$description, "Faulty YAML")
+    expect_equal(x$path, "../testdata/Faulty_YAML/template.yaml")
+
+    x <- get_yaml(("../testdata/Correct_YAML/template.yaml"))
+    expect_equal(x$name, "Basic Word")
+    expect_equal(x$description, "A basic markdown template for Word outputs.\n")
+    expect_equal(x$path, "../testdata/Correct_YAML/template.yaml")
 })

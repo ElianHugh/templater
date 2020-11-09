@@ -7,10 +7,8 @@ test_that("templater_table() returns a datatable", {
 
 test_that("uiElements are all of class shiny.tag", {
     expect_true("shiny.tag" %in% class(templater_selection()))
-    expect_true("shiny.tag" %in% class(templater_input(wd = getwd())))
-    expect_true("shiny.tag" %in% class(templater_conf_button()))
-    expect_true("shiny.tag" %in% class(templater_gen_button()))
-    expect_true("shiny.tag" %in% class(templater_canc_button("test")))
+    expect_true("shiny.tag" %in% class(templater_input()))
+    expect_true("shiny.tag" %in% class(templater_directory(wd = getwd())))
     expect_true("shiny.tag" %in% class(templater_creator()))
 })
 

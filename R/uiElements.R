@@ -1,70 +1,51 @@
 
 templater_selection <- function() {
     shiny::div(
-        DT::DTOutput("table", width = "100%", height = "auto"),
+        DT::DTOutput("table", width = "auto", height = "auto"),
     )
 }
 
-templater_input <- function(wd) {
-    shiny::div(
-        shiny::div(
-            style = "margin-top: -15px",
-            shiny::p(shiny::strong("Name")),
-            shiny::tags$input(
-                placeholder = "untitled",
-                class = "form-control",
-                type = "text",
-                pattern = "[(a-zA-Z0-9_ )]*",
-                title = "Must be a valid file name.",
-                id = "name_input",
-        )),
-        shiny::div(
-            style = "padding-top: 5px",
-            shiny::p(shiny::strong("Directory")),
-            shiny::splitLayout(
-                cellWidths = c("60%", "40%"),
-                shiny::textInput(
-                    "dir_input",
-                    label = NULL,
-                    value = wd
-                ),
-                shiny::actionButton(
-                    inputId = "dir_button",
-                    label = "Browse",
-                    class = "btn btn-secondary"
-                )
-        ))
-    )
+templater_input <- function() {
+     shiny::div(
+         style = "width: 80%",
+         shiny::p(shiny::strong("Name")),
+         shiny::tags$input(
+             placeholder = "untitled",
+             class = "form-control",
+             type = "text",
+             pattern = "[(a-zA-Z0-9_ )]*",
+             title = "Must be a valid file name.",
+             id = "name_input",
+         )
+     )
 }
 
-templater_conf_button <- function() {
-    shinyjs::disabled(
-        shiny::actionButton(
-            inputId = "conf",
-            class = "btn btn-success",
-            label = "Confirm"
+# * TODO change flex sizes for elements
+templater_directory <- function(wd) {
+shiny::div(
+    #style = "padding-top: 5px",
+    shiny::p(shiny::strong("Directory")),
+        shiny::fillRow(
+            shiny::textInput(
+                "dir_input",
+                label = NULL,
+                value = wd
+            ),
+            shiny::actionButton(
+                inputId = "dir_button",
+                label = "Browse",
+                class = "btn btn-secondary"
+            ),
+            shiny::checkboxInput(
+                inputId = "check_input",
+                label = "New Directory"
+            )
         )
-    )
+
+)
 }
 
-templater_gen_button <- function() {
-    shinyjs::disabled(
-        shiny::actionButton(
-            inputId = "gen",
-            class = "btn btn-success",
-            label = "Generate"
-        )
-    )
-}
-
-templater_canc_button <- function(id) {
-    shiny::actionButton(
-        inputId = id,
-        class = "btn btn-danger",
-        label = "Cancel"
-    )
-}
-
+# * TODO change table width
 templater_table <- function(data) {
     DT::datatable(data,
         rownames = FALSE,
@@ -78,7 +59,7 @@ templater_table <- function(data) {
             ),
             rowCallback = DT::JS(
             "function(row, data) {",
-            "var full_text = data[1]",
+            "var full_text = data[2]",
             "$('td', row).attr('title', full_text);",
             "}"),
             scroller = TRUE,
