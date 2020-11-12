@@ -1,7 +1,7 @@
 
 get_yaml <- function(path) {
     x <- yaml::read_yaml(path)
-    if(is.null(x)) {
+    if (is.null(x)) {
         x$name <- "Faulty YAML"
         x$description <- "Faulty YAML"
     }

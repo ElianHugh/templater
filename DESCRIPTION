@@ -6,7 +6,7 @@ Authors@R:
            family = "Thiele-Evans",
            role = c("aut", "cre"),
            email = "elianhte@gmail.com")
-Description: templater scans your installed packages for templates that can be used to create rmarkdown files. templater also comes with some basic templates that can be used to quickly get started on a project, without having to deal with all the extra bells and whistles that come with complicated templates. templater also allows for the creation of user-templates, which are stored alongside the package’s templates.
+Description: scans your installed packages for templates that can be used to create rmarkdown files. templater also comes with some basic templates that can be used to quickly get started on a project, without having to deal with all the extra bells and whistles that come with complicated templates. templater also allows for the creation of user-templates, which are stored alongside the package’s templates.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

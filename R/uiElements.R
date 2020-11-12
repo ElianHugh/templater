@@ -1,7 +1,7 @@
 
 templater_selection <- function() {
     shiny::div(
-        DT::DTOutput("table", width = "auto", height = "auto"),
+        DT::DTOutput("table"),
     )
 }
 
@@ -23,9 +23,9 @@ templater_input <- function() {
 # * TODO change flex sizes for elements
 templater_directory <- function(wd) {
 shiny::div(
-    #style = "padding-top: 5px",
     shiny::p(shiny::strong("Directory")),
         shiny::fillRow(
+            flex = c(5, 4, 2),
             shiny::textInput(
                 "dir_input",
                 label = NULL,
@@ -50,7 +50,7 @@ templater_table <- function(data) {
     DT::datatable(data,
         rownames = FALSE,
         selection = "single",
-        extensions = "Scroller",
+        #extensions = "Scroller",
         options = list(
             headerCallback = DT::JS(
                 "function(thead, data, start, end, display) {",
@@ -59,15 +59,17 @@ templater_table <- function(data) {
             ),
             rowCallback = DT::JS(
             "function(row, data) {",
-            "var full_text = data[2]",
+            "var full_text = data[1]",
             "$('td', row).attr('title', full_text);",
             "}"),
-            scroller = TRUE,
-            scrollY = 300,
+            #scroller = TRUE,
+            scrollY = "50vh",
             scrollCollapse = TRUE,
             dom = "t",
-            height = "100%",
-            width = "100%",
+            paging = FALSE,
+            #height = "100%",
+            #width = "100%",
+            #fillContainer = TRUE,
             columnDefs = list(
                 list(
                     visible = FALSE,
