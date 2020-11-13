@@ -61,3 +61,33 @@ test_that("get_yaml() functions correctly", {
     expect_equal(x$description, "A basic markdown template for Word outputs.\n")
     expect_equal(x$path, "../testdata/Correct_YAML/template.yaml")
 })
+
+test_that("use_template() functions correctly", {
+    expect_error(use_template())
+
+    loc <- ""
+    s <- 1
+    name <- "document"
+    check <- FALSE
+    curr_data <- function() {
+        return(data.frame(
+            "Temp" = "basic_word",
+            "Package" = "templater"
+        ))
+    }
+    expect_error(use_template(loc, s, name, check, curr_data), NA)
+
+    # Will throw an error because the file creation is run from testthat
+    expect_message(use_template(loc, s, name, check, curr_data),
+    "templater: error in document creation...")
+})
+
+test_that("create_custom_template() functions correctly", {
+    expect_error(create_custom_template())
+
+    input <- NULL
+    input$template_name_input <- "Title"
+    input$template_desc_input <- "A description"
+    input$rmd_input <- "Lorem ipsum"
+    expect_error(create_custom_template(input), NA)
+})

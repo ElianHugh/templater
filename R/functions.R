@@ -34,15 +34,15 @@ get_package_templates <- function() {
     # Appeasing R CMD check
     Package <- NULL
 
-    if(!is.null(paths) | length(paths) > 0) {
+    if (!is.null(paths) | length(paths) > 0) {
         temp_frame <- paths %>%
             purrr::map_df(get_yaml) %>%
             dplyr::mutate(
-                Temp = (stringr::str_extract(paths, temp_name_pat)),
+                Temp = stringr::str_extract(paths, temp_name_pat),
                 Package = dplyr::case_when(
-                    (((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
-                    TRUE ~ (((stringr::str_extract(paths, pattern))))
-                ),
+                        stringr::str_extract(paths, pattern) == 0 ~ "rmarkdown",
+                        TRUE ~ stringr::str_extract(paths, pattern)
+                    ),
                 PkgDisplay = paste0("{", Package, "}"),
             ) %>%
             dplyr::filter(!grepl("templater", Package))
@@ -78,14 +78,14 @@ get_other_templates  <- function() {
   # Appeasing R CMD check
   Package <- NULL
 
-  if(!is.null(paths) | length(paths) > 0) {
+  if (!is.null(paths) | length(paths) > 0) {
         temp_frame <- paths %>%
             purrr::map_df(get_yaml) %>%
             dplyr::mutate(
                 Temp = (stringr::str_extract(paths, temp_name_pat)),
                 Package = dplyr::case_when(
-                    (((stringr::str_extract(paths, pattern)))) == 0 ~ "rmarkdown",
-                    TRUE ~ (((stringr::str_extract(paths, pattern))))
+                    stringr::str_extract(paths, pattern) == 0 ~ "rmarkdown",
+                    TRUE ~ stringr::str_extract(paths, pattern)
                 ),
                 PkgDisplay = paste0("{", Package, "}"),
             ) %>%
@@ -113,17 +113,17 @@ use_template  <- function(loc, s, name, check, curr_data) {
     )
 
     # Ensure function works without rstudioapi
-    if(isNamespaceLoaded("rstudioapi")) {
+    if (isNamespaceLoaded("rstudioapi") && rstudioapi::isAvailable()) {
         if (fs::file_exists(file_path)) {
             rstudioapi::showDialog(
-                title = "Templator",
-                "created document."
+                title = "Templater",
+                paste0("created document at: ", file_path)
             )
             rstudioapi::navigateToFile(file_path)
         } else {
             rstudioapi::showDialog(
-                title = "Templator",
-                "error in document creation.."
+                title = "Templater",
+                "error in document creation..."
             )
         }
     } else {
@@ -176,7 +176,7 @@ create_custom_template <- function(input) {
     writeLines(temp_yaml_lines, yaml_file)
 
     # Utilise rstudioapi if loaded
-    if(isNamespaceLoaded("rstudioapi")) {
+    if (isNamespaceLoaded("rstudioapi") && rstudioapi::isAvailable()) {
         if (fs::file_exists(skeleton_file)) {
             rstudioapi::showDialog(
                 title = "Templator",
@@ -191,10 +191,6 @@ create_custom_template <- function(input) {
     } else {
          if (fs::file_exists(skeleton_file)) {
             message("Templater: created template")
-             rstudioapi::showDialog(
-                 title = "Templator",
-                 "created template"
-             )
          } else {
              message("Templater: there was an error during template creation.")
          }
@@ -232,7 +228,9 @@ check_input <- function(input) {
        } else if (input$template_name_input != "" &&
         input$template_desc_input != "" &&
         input$rmd_input != "" &&
-        !grepl(input$template_name_input, pattern = "[^(a-zA-Z0-9_ ]", perl = TRUE)){
+        !grepl(input$template_name_input,
+        pattern = "[^(a-zA-Z0-9_ ]",
+        perl = TRUE)) {
         return(TRUE)
     } else {
         return(FALSE)

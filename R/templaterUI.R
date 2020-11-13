@@ -14,8 +14,7 @@ templater_ui <- function(wd) {
             miniUI::miniTabPanel("Markdown Templates",
                 icon = shiny::icon("file-alt"),
                 miniUI::miniContentPanel(
-
-                        templater_selection(),
+                    templater_selection(),
                     shiny::fillCol(
                         height = "30vh",
                         shiny::fillCol(

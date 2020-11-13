@@ -25,7 +25,7 @@ templater_directory <- function(wd) {
 shiny::div(
     shiny::p(shiny::strong("Directory")),
         shiny::fillRow(
-            flex = c(5, 4, 2),
+            flex = c(5, 4, 3),
             shiny::textInput(
                 "dir_input",
                 label = NULL,
@@ -59,17 +59,13 @@ templater_table <- function(data) {
             ),
             rowCallback = DT::JS(
             "function(row, data) {",
-            "var full_text = data[1]",
+            "var full_text = data[2]",
             "$('td', row).attr('title', full_text);",
             "}"),
-            #scroller = TRUE,
             scrollY = "50vh",
             scrollCollapse = TRUE,
             dom = "t",
             paging = FALSE,
-            #height = "100%",
-            #width = "100%",
-            #fillContainer = TRUE,
             columnDefs = list(
                 list(
                     visible = FALSE,
