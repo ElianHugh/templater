@@ -16,5 +16,11 @@
 templater <- function() {
     wd <- if (!is.null(getwd())) getwd() else ""
     ui <- templater_ui(wd)
-    shiny::runGadget(shiny::shinyApp(ui, templater_server))
+    shiny::runGadget(
+        shiny::shinyApp(
+            ui,
+            templater_server
+        ),
+        viewer = paneViewer(minHeight = 500)
+    )
 }

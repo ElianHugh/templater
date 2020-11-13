@@ -75,9 +75,11 @@ test_that("use_template() functions correctly", {
             "Package" = "templater"
         ))
     }
+    skip_on_os(c("mac", "linux", "solaris"))
     expect_error(use_template(loc, s, name, check, curr_data), NA)
 
     # Will throw an error because the file creation is run from testthat
+    skip_on_os(c("mac", "linux", "solaris"))
     expect_message(use_template(loc, s, name, check, curr_data),
     "templater: error in document creation...")
 })
@@ -89,5 +91,6 @@ test_that("create_custom_template() functions correctly", {
     input$template_name_input <- "Title"
     input$template_desc_input <- "A description"
     input$rmd_input <- "Lorem ipsum"
+    skip_on_os(c("mac", "linux", "solaris"))
     expect_error(create_custom_template(input), NA)
 })

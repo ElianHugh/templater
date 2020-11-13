@@ -1,76 +1,141 @@
-/* Table CSS */
+/**
+ * /* Table CSS
+ *
+ * @format
+ */
 
 tr {
-    background: white;
-    cursor: pointer;
+	background: white;
+	cursor: pointer;
 }
 
 td {
-    border-top: 1px solid white;/* Standard */
+	border-top: 1px solid white; /* Standard */
 }
 
-td, label {
-    -webkit-user-select: none; /* Safari */
--moz-user-select: none; /* Firefox */
--ms-user-select: none; /* IE10+/Edge */
-user-select: none; /* Standard */
+td,
+label {
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
 }
 
 .datatables {
-    line-height: 0.6 !important;
+	line-height: 0.6 !important;
 }
 
 .dataTable-no-footer {
-    border-bottom:  1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
 }
 
 .dataTables_scrollBody {
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
+	border: 1px solid #e3e3e3;
+	border-radius: 4px;
 }
 
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
-    border: none !important;
+	border: none !important;
 }
 
 /* Text Input CSS */
 
 input:invalid {
-    border: 1px solid;
-    border-radius: 4px;
-    outline:none !important;
-    border-color: #dc3545 !important;
-    box-shadow:0 0 14px #dc3545 !important;
+	border: 1px solid;
+	border-radius: 4px;
+	outline: none !important;
+	border-color: #dc3545 !important;
+	box-shadow: 0 0 14px #dc3545 !important;
 }
 
-input, .form-control {
-    /*border: 1px white !important;*/
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+input,
+.form-control {
+	/*border: 1px white !important;*/
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 
 input:focus:not(:invalid) {
-    /*border: 1px solid; /**/
-    outline:none !important;
-    border-color:#9ecaed !important;
-     box-shadow: 0px 0px 14px #4195fc !important;
-    -moz-box-shadow: 0px 0px 14px #4195fc !important;
-    -webkit-box-shadow: 0px 0px 14px #4195fc !important;
+	/*border: 1px solid; /**/
+	outline: none !important;
+	border-color: #9ecaed !important;
+	box-shadow: 0px 0px 14px #4195fc !important;
+	-moz-box-shadow: 0px 0px 14px #4195fc !important;
+	-webkit-box-shadow: 0px 0px 14px #4195fc !important;
 }
 
 /* Other */
 
 #dirButton {
-    overflow: hidden !important;
+	overflow: hidden !important;
 }
 
 .templateDetails {
-    justify-content: center;
-                             align-items: center;
-                             padding-left: 20px;
-                             padding-top: 10px;
-                             background: #f5f5f5;
-                        border: 1px solid #e3e3e3;
-                        border-radius: 4px;
+	justify-content: center;
+	align-items: center;
+	padding-left: 20px;
+	padding-top: 10px;
+	background: #f5f5f5;
+	border: 1px solid #e3e3e3;
+	border-radius: 4px;
+}
+
+#done {
+	background: #28a745 !important;
+	border-color: #28a745 !important;
+}
+
+#cancel {
+	background: #dc3545 !important;
+	color: #fff !important;
+	border-color: #dc3545 !important;
+}
+
+.gadget-title {
+	background-color: #343a40 !important;
+}
+
+h1 {
+	color: #fff !important;
+}
+
+.gadget-tabs {
+	background-color: #343a40 !important;
+}
+
+.nav > li > a:focus,
+.nav > li > a:hover {
+	background-color: #343a40 !important;
+}
+
+.dataTables_filter, div.dt-buttons {
+    float: left !important;
+    align-items: center;
+}
+
+.dataTables_filter > label > input {
+	display: block;
+	width: 50%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out 0.15s,
+		box-shadow ease-in-out 0.15s;
+	-o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	-webkit-transition: border-color ease-in-out 0.15s,
+		-webkit-box-shadow ease-in-out 0.15s;
+	transition: border-color ease-in-out 0.15s,
+		-webkit-box-shadow ease-in-out 0.15s;
+	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s,
+		-webkit-box-shadow ease-in-out 0.15s;
 }

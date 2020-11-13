@@ -50,7 +50,7 @@ templater_table <- function(data) {
     DT::datatable(data,
         rownames = FALSE,
         selection = "single",
-        #extensions = "Scroller",
+        extensions = "Buttons",
         options = list(
             headerCallback = DT::JS(
                 "function(thead, data, start, end, display) {",
@@ -62,10 +62,31 @@ templater_table <- function(data) {
             "var full_text = data[2]",
             "$('td', row).attr('title', full_text);",
             "}"),
-            scrollY = "50vh",
+            scrollY = "40vh",
             scrollCollapse = TRUE,
-            dom = "t",
+            dom = "Bft",
+            buttons = list(
+                 list(
+                     extend = "collection",
+                     text = "Packages",
+                     action = DT::JS("function ( e, dt, node, config ) {
+                                      Shiny.setInputValue('test', true, {priority: 'event'});
+                                   }")
+                 ),
+                 list(
+                     extend = "collection",
+                     text = "Other",
+                     action = DT::JS("function ( e, dt, node, config ) {
+                                      Shiny.setInputValue('test', true, {priority: 'event'});
+                                   }")
+                 )
+              ),
             paging = FALSE,
+            language = list(
+                search = "",
+                searchPlaceholder = "Search"
+            ),
+            searchDelay = 0,
             columnDefs = list(
                 list(
                     visible = FALSE,
@@ -77,7 +98,8 @@ templater_table <- function(data) {
 }
 
 templater_creator <- function() {
-    shiny::wellPanel(
+    shiny::div(
+        class = "templateDetails",
         shiny::p(shiny::strong("Template Name")),
         shiny::tags$input(
                 placeholder = "untitled",
@@ -92,13 +114,15 @@ templater_creator <- function() {
             "template_desc_input",
             label = NULL,
             placeholder = "My custom template.",
-            resize = "vertical"
+            resize = "vertical",
+            width = "100%"
         ),
         shiny::p(shiny::strong("Body")),
         shiny::textAreaInput(
             inputId = "rmd_input",
             label = NULL,
-            resize = "vertical"
+            resize = "vertical",
+            width = "100%"
         )
     )
 }
