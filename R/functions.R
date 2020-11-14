@@ -2,8 +2,8 @@
 get_yaml <- function(path) {
     x <- yaml::read_yaml(path)
     if (is.null(x)) {
-        x$name <- "Faulty YAML"
-        x$description <- "Faulty YAML"
+        x$name <- "FAULTY YAML"
+        x$description <- "FAULTY YAML"
     }
     x$path <- path
     return(x)
@@ -44,52 +44,7 @@ get_package_templates <- function() {
                         TRUE ~ stringr::str_extract(paths, pattern)
                     ),
                 PkgDisplay = paste0("{", Package, "}"),
-            ) %>%
-            dplyr::filter(!grepl("templater", Package))
-        return(temp_frame)
-    } else {
-        NULL
-    }
-}
-
-
-#' @title get other templates
-#' @description Find all templater templates (including custom templates)
-#' stored locally on the computer, and return a dataframe for later use.
-#' @return tibble
-#' @examples
-#' \dontrun{
-#' if(interactive()) {
-#'  get_other_templates()
-#'  }
-#' }
-#' @export
-#' @rdname get_other_templates
-#' @import purrr
-#' @import yaml
-#' @import tibble
-#' @import dplyr
-#' @import stringr
-get_other_templates  <- function() {
-    pattern <- "[A-Za-z0-9_ ]+(?=/+rmarkdown)"
-    temp_name_pat <- "[A-Za-z0-9_ ]+(?=/+template.yaml)"
-    paths <- get_paths(.libPaths(), "*template.yaml")
-
-  # Appeasing R CMD check
-  Package <- NULL
-
-  if (!is.null(paths) | length(paths) > 0) {
-        temp_frame <- paths %>%
-            purrr::map_df(get_yaml) %>%
-            dplyr::mutate(
-                Temp = (stringr::str_extract(paths, temp_name_pat)),
-                Package = dplyr::case_when(
-                    stringr::str_extract(paths, pattern) == 0 ~ "rmarkdown",
-                    TRUE ~ stringr::str_extract(paths, pattern)
-                ),
-                PkgDisplay = paste0("{", Package, "}"),
-            ) %>%
-            dplyr::filter(grepl("templater", Package))
+            )
         return(temp_frame)
     } else {
         NULL

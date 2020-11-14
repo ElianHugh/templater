@@ -1,13 +1,13 @@
 templater_ui <- function(wd) {
     miniUI::miniPage(
-        if (fs::file_exists("www/styles.css")) {
-            shiny::includeCSS("www/styles.css")
-        },
-        # Include JS
-        shinyjs::useShinyjs(),
-        if (fs::file_exists("www/app.js")) {
-            shiny::includeScript(path = "www/app.js")
-        },
+        htmltools::singleton(x = htmltools::tagList(
+            htmltools::tags$link(
+                rel = "stylesheet",
+                type = "text/css",
+                href = "templater/styles.css"
+            ),
+            htmltools::tags$script(src = "templater/app.js")
+        )),
         miniUI::gadgetTitleBar("templater::"),
         miniUI::miniTabstripPanel(
             id = "nav",

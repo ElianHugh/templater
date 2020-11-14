@@ -1,19 +1,7 @@
 test_that("get_package_templates() functions correctly", {
     rmd <- get_package_templates()
     expect_false(is.null(rmd))
-    rmd <- rmd %>%
-        dplyr::filter(Package == "templater")
-    expect_length(rmd$Package, 0)
 })
-
-test_that("get_other_templates() functions correctly", {
-    other <- get_other_templates()
-    expect_false(is.null(other))
-    other <- other %>%
-        dplyr::filter(Package != "templater")
-    expect_length(other$Package, 0)
-})
-
 
 test_that("get_paths() returns file paths", {
     paths <- get_paths(.libPaths(), "*template.yaml")
@@ -52,8 +40,8 @@ test_that("get_yaml() functions correctly", {
     expect_error(get_yaml())
 
     x <- get_yaml(("../testdata/Faulty_YAML/template.yaml"))
-    expect_equal(x$name, "Faulty YAML")
-    expect_equal(x$description, "Faulty YAML")
+    expect_equal(x$name, "FAULTY YAML")
+    expect_equal(x$description, "FAULTY YAML")
     expect_equal(x$path, "../testdata/Faulty_YAML/template.yaml")
 
     x <- get_yaml(("../testdata/Correct_YAML/template.yaml"))
@@ -75,10 +63,10 @@ test_that("use_template() functions correctly", {
             "Package" = "templater"
         ))
     }
+    # Due to permission issues, have to  skip on non-windows OS
     skip_on_os(c("mac", "linux", "solaris"))
     expect_error(use_template(loc, s, name, check, curr_data), NA)
 
-    # Will throw an error because the file creation is run from testthat
     skip_on_os(c("mac", "linux", "solaris"))
     expect_message(use_template(loc, s, name, check, curr_data),
     "templater: error in document creation...")
@@ -91,6 +79,8 @@ test_that("create_custom_template() functions correctly", {
     input$template_name_input <- "Title"
     input$template_desc_input <- "A description"
     input$rmd_input <- "Lorem ipsum"
+
+    # Due to permission issues, have to  skip on non-windows OS
     skip_on_os(c("mac", "linux", "solaris"))
     expect_error(create_custom_template(input), NA)
 })

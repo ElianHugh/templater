@@ -64,23 +64,7 @@ templater_table <- function(data) {
             "}"),
             scrollY = "40vh",
             scrollCollapse = TRUE,
-            dom = "Bft",
-            buttons = list(
-                 list(
-                     extend = "collection",
-                     text = "Packages",
-                     action = DT::JS("function ( e, dt, node, config ) {
-                                      Shiny.setInputValue('test', true, {priority: 'event'});
-                                   }")
-                 ),
-                 list(
-                     extend = "collection",
-                     text = "Other",
-                     action = DT::JS("function ( e, dt, node, config ) {
-                                      Shiny.setInputValue('test', true, {priority: 'event'});
-                                   }")
-                 )
-              ),
+            dom = "ft",
             paging = FALSE,
             language = list(
                 search = "",

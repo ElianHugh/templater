@@ -21,6 +21,16 @@ templater <- function() {
             ui,
             templater_server
         ),
-        viewer = paneViewer(minHeight = 500)
+        viewer = shiny::paneViewer(minHeight = "maximize")
+    )
+}
+
+.onLoad <- function(...) {
+    shiny::addResourcePath(
+        "templater",
+        system.file(
+            "assets",
+            package = "templater"
+        )
     )
 }

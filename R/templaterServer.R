@@ -1,6 +1,5 @@
 templater_server <- function(input, output, session) {
 rmd <- get_package_templates()
-other <- get_other_templates()
     # Reactive Variables
     curr_path <- shiny::reactive({
         loc <- input$dir_input
@@ -26,11 +25,10 @@ other <- get_other_templates()
         return(path)
     })
 
+    # * TODO refactor
     curr_data <- shiny::reactive({
         if (input$nav == "Markdown Templates") {
             dat <- rmd
-        } else {
-            dat <- other
         }
         dat
     })
