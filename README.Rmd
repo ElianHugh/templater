@@ -62,7 +62,7 @@ output: html_document
 templater is unlikely to be useful for those using RStudio, but I hope that it might find some use amongst vscode users.  For extra functionality (e.g. navigating to new files, IDE dialog, etc.) I am using the new rstudioapi emulation employed by VSCode-R, so there shouldn't be any difference in templater functionality between the two IDEs. Below you can see templater running in both vscode and RStudio.
 
 #### VSCode-R
-![vscode](man/figures/vscode-templater.png)
+![vscode](man/figures/vscode-templater.PNG)
 
 #### RStudio
-![rstudio](man/figures/rstudio-templater.png)
+![rstudio](man/figures/rstudio-templater.PNG)
