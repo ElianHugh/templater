@@ -16,6 +16,7 @@ Imports:
     dplyr,
     purrr,
     shiny,
+    htmltools,
     DT,
     yaml,
     easycsv,
