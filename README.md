@@ -83,8 +83,8 @@ IDEs. Below you can see templater running in both vscode and RStudio.
 
 #### VSCode-R
 
-![vscode](man/figures/vscode-templater.png)
+![vscode](man/figures/vscode-templater.PNG)
 
 #### RStudio
 
-![rstudio](man/figures/rstudio-templater.png)
+![rstudio](man/figures/rstudio-templater.PNG)
