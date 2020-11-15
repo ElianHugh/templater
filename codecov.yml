@@ -1,0 +1,11 @@
+comment: no
+coverage:
+  range: 50..70
+
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 5%
+
+    patch: false
