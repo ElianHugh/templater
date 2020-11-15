@@ -1,12 +1,18 @@
 
+# templater
+
+> Allows for the use of markdown templates from installed R-packages
+> (e.g. [papaja](https://github.com/crsh/papaja)), and for the creation
+> of user-generated templates.
+
 <!-- badges: start -->
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Build](https://travis-ci.com/ElianHugh/templater.svg?token=gH35B76qsVbgqgsMRb83&branch=master)](https://travis-ci.com/ElianHugh/templater)
 [![R-CMD-Check](https://github.com/ElianHugh/templater/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/templater/actions)
 [![codecov](https://codecov.io/gh/ElianHugh/templater/branch/master/graph/badge.svg?token=7BXS4HSBDX)](https://codecov.io/gh/ElianHugh/templater)
 <!-- badges: end -->
-
-# templater - WORK IN PROGRESS
 
 *{templater}* is an attempt to bring template usage to
 [VSCode-R](https://github.com/Ikuyadeu/vscode-R). templater scans your
@@ -22,19 +28,15 @@ Future updates will include other (i.e. non-markdown) templates.
 
 Install with:
 
-``` r
-remotes::install_github("ElianHugh/templater")
-```
+    remotes::install_github("ElianHugh/templater")
 
 # Opening Templater
 
 *{templater}* can be called by first loading it into your r session and
 then running its shiny gadget
 
-``` r
-library(templater)
-templater()
-```
+    library(templater)
+    templater()
 
 Alternatively, you can call templater through the addin interface,
 meaning you don’t have to make a library call. This will work in
@@ -42,13 +44,13 @@ vscode-r as long as you have rstudioapi enabled.
 
 # Template Usage
 
-Markdown templates can be found under the “Use Templates” tab, which
-lists both package templates and templater templates (including
+Markdown templates can be found under the “Markdown Templates” tab,
+which lists both package templates and templater templates (including
 user-generated templates). You can use the search function to find your
 desired template quickly.
 
 Once you have selected a template, input a file name and choose where to
-save the file. Clicking confirm will close templater and open up the new
+save the file. Clicking done will close templater and open up the new
 rmarkdown file.
 
 # Template Creation
@@ -61,16 +63,14 @@ The body contains *both* the YAML header and rmarkdown body. When
 writing the body, make sure you include the YAML header first. For
 example:
 
-``` r
----
-title: "Untitled"
-output: html_document
----
+    ---
+    title: "Untitled"
+    output: html_document
+    ---
 
-# Header
+    # Header
 
-## Subheader
-```
+    ## Subheader
 
 # IDE Differences
 
