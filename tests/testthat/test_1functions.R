@@ -53,7 +53,7 @@ test_that("get_yaml() functions correctly", {
 test_that("use_template() functions correctly", {
     expect_error(use_template())
 
-    loc <- ""
+    loc <- path.expand('~')
     s <- 1
     name <- "document"
     check <- FALSE
@@ -62,12 +62,14 @@ test_that("use_template() functions correctly", {
             "Package" = "templater"
         )
     # Due to permission issues, have to  skip on non-windows OS
-    skip_on_os(c("mac", "linux", "solaris"))
     expect_error(use_template(loc, s, name, check, curr_data), NA)
+    fs::file_delete(paste0(loc, "/", name, ".Rmd"))
 
-    skip_on_os(c("mac", "linux", "solaris"))
-    expect_message(use_template(loc, s, name, check, curr_data),
-    "templater: error in document creation...")
+    expect_message(
+        use_template(loc, s, name, check, curr_data),
+        "templater created document at:"
+    )
+    fs::file_delete(paste0(loc, "/", name, ".Rmd"))
 })
 
 test_that("create_custom_template() functions correctly", {
@@ -78,7 +80,5 @@ test_that("create_custom_template() functions correctly", {
     input$template_desc_input <- "A description"
     input$rmd_input <- "Lorem ipsum"
 
-    # Due to permission issues, have to  skip on non-windows OS
-    skip_on_os(c("mac", "linux", "solaris"))
     expect_error(create_custom_template(input), NA)
 })

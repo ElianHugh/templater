@@ -93,12 +93,9 @@ use_template  <- function(loc, s, name, check, curr_data) {
 create_custom_template <- function(input) {
     template_name  <- input$template_name_input
     template_desc <- input$template_desc_input
-    templater_path <- fs::dir_ls(
-        path = .libPaths(),
-        recurse = TRUE,
-        type = "directory",
-        glob = "*templater/rmarkdown/templates",
-        fail = FALSE
+    templater_path <- paste0(
+        get_writeable_lib(),
+        "/templater/rmarkdown/templates"
     )
     temp_yaml_lines <- sprintf(
         "name: %s\ndescription: >\n  %s\ncreate_dir: false",
@@ -163,6 +160,12 @@ get_paths <- function(vec, glob) {
         fail = FALSE
     )
     return(unlist(paths))
+}
+
+get_writeable_lib <- function() {
+    lib <- .libPaths()
+    writeable <- fs::file_access(lib, mode = "write")
+    return(names(which(writeable == TRUE)[1]))
 }
 
 # * TODO make use of reactivity to
