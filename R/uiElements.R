@@ -20,7 +20,6 @@ templater_input <- function() {
      )
 }
 
-# * TODO change flex sizes for elements
 templater_directory <- function(wd) {
 shiny::div(
     shiny::p(shiny::strong("Directory")),
@@ -45,12 +44,10 @@ shiny::div(
 )
 }
 
-# * TODO change table width
 templater_table <- function(data) {
     DT::datatable(data,
         rownames = FALSE,
         selection = "single",
-        extensions = "Buttons",
         options = list(
             headerCallback = DT::JS(
                 "function(thead, data, start, end, display) {",
@@ -62,7 +59,7 @@ templater_table <- function(data) {
             "var full_text = data[2]",
             "$('td', row).attr('title', full_text);",
             "}"),
-            scrollY = "40vh",
+            scrollY = "30vh",
             scrollCollapse = TRUE,
             dom = "ft",
             paging = FALSE,

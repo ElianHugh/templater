@@ -8,13 +8,19 @@ templater_ui <- function(wd) {
             ),
             htmltools::tags$script(src = "templater/app.js")
         )),
-        miniUI::gadgetTitleBar("templater::"),
+        miniUI::gadgetTitleBar("templater::",
+        right = miniUI::miniTitleBarButton(
+            inputId = "done",
+            "Done",
+            primary = TRUE)),
         miniUI::miniTabstripPanel(
             id = "nav",
             miniUI::miniTabPanel("Markdown Templates",
                 icon = shiny::icon("file-alt"),
                 miniUI::miniContentPanel(
-                    templater_selection(),
+                    templater_selection()
+                ),
+                miniUI::miniContentPanel(
                     shiny::fillCol(
                         height = "30vh",
                         shiny::fillCol(
@@ -26,9 +32,6 @@ templater_ui <- function(wd) {
                         )
                     )
                 )
-            ),
-            miniUI::miniTabPanel("Other Templates",
-                icon = shiny::icon("tape")
             ),
             miniUI::miniTabPanel("Create Templates",
                 icon = shiny::icon("edit"),

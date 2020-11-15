@@ -61,8 +61,8 @@ use_template  <- function(loc, s, name, check, curr_data) {
 
     file_path <- rmarkdown::draft(
         file = conc_path,
-        template = curr_data()[s, ]$Temp,
-        package = curr_data()[s, ]$Package,
+        template = curr_data[s, ]$Temp,
+        package = curr_data[s, ]$Package,
         edit = FALSE,
         create_dir = check
     )
@@ -165,9 +165,13 @@ get_paths <- function(vec, glob) {
     return(unlist(paths))
 }
 
+# * TODO make use of reactivity to
+# refactor this
 check_valid  <- function(input, curr_path) {
     if (!is.null(input$table_rows_selected) &&
         !fs::file_access(path = curr_path, mode = "exists") &&
+            !is.null(input$name_input) &&
+            input$name_input != "" &&
         !grepl(input$name_input, pattern = "[^(a-zA-Z0-9_ ]", perl = TRUE)) {
             return(TRUE)
     } else {

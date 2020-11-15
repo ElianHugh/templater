@@ -1,5 +1,5 @@
 templater_server <- function(input, output, session) {
-rmd <- get_package_templates()
+curr_data <- get_package_templates()
     # Reactive Variables
     curr_path <- shiny::reactive({
         loc <- input$dir_input
@@ -25,38 +25,33 @@ rmd <- get_package_templates()
         return(path)
     })
 
-    # * TODO refactor
-    curr_data <- shiny::reactive({
-        if (input$nav == "Markdown Templates") {
-            dat <- rmd
-        }
-        dat
-    })
-
     ## Template list
     output$table <- DT::renderDT({
-        templater_table(curr_data())
+        templater_table(curr_data)
     })
 
-    # * TODO correct the logic here
+    # * TODO does not appear to function with gadget title bar
     ## Reactive confirm
     shiny::observe({
-        if (input$nav != "Create Templates") {
-            shinyjs::toggleState("done", check_valid(input, curr_path()))
+        if (input$nav != "Create Templates" &&
+        check_valid(input, curr_path())) {
+                shinyjs::enable(id = "done")
+        } else if (check_input(input)) {
+                shinyjs::enable(id = "done")
         } else {
-            shinyjs::toggleState("done", check_input(input))
+            shinyjs::disable(id = "done")
         }
     })
 
     ## Tick Event
     shiny::observeEvent(input$table_rows_selected, {
         s <- input$table_rows_selected
-        if (!is.na(curr_data()[s, ]$create_dir) ||
-            !is.null(curr_data()[s, ]$create_dir)) {
+        if (!is.na(curr_data[s, ]$create_dir) ||
+            !is.null(curr_data[s, ]$create_dir)) {
             shiny::updateCheckboxInput(
                 session,
                 inputId = "check_input",
-                value   = curr_data()[s, ]$create_dir
+                value   = curr_data[s, ]$create_dir
             )
         }
     })

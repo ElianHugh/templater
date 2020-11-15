@@ -38,6 +38,10 @@ label {
 	border: none !important;
 }
 
+div.gadget-scroll {
+	overflow: hidden !important;
+}
+
 /* Text Input CSS */
 
 input:invalid {

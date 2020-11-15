@@ -57,12 +57,10 @@ test_that("use_template() functions correctly", {
     s <- 1
     name <- "document"
     check <- FALSE
-    curr_data <- function() {
-        return(data.frame(
+    curr_data <- data.frame(
             "Temp" = "basic_word",
             "Package" = "templater"
-        ))
-    }
+        )
     # Due to permission issues, have to  skip on non-windows OS
     skip_on_os(c("mac", "linux", "solaris"))
     expect_error(use_template(loc, s, name, check, curr_data), NA)
