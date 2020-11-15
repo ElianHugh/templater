@@ -28,15 +28,19 @@ Future updates will include other (i.e. non-markdown) templates.
 
 Install with:
 
-    remotes::install_github("ElianHugh/templater")
+``` r
+remotes::install_github("ElianHugh/templater")
+```
 
 # Opening Templater
 
 *{templater}* can be called by first loading it into your r session and
 then running its shiny gadget
 
-    library(templater)
-    templater()
+``` r
+library(templater)
+templater()
+```
 
 Alternatively, you can call templater through the addin interface,
 meaning you don’t have to make a library call. This will work in
@@ -63,14 +67,16 @@ The body contains *both* the YAML header and rmarkdown body. When
 writing the body, make sure you include the YAML header first. For
 example:
 
-    ---
-    title: "Untitled"
-    output: html_document
-    ---
+``` rmd
+---
+title: "Untitled"
+output: html_document
+---
 
-    # Header
+# Header
 
-    ## Subheader
+## Subheader
+```
 
 # IDE Differences
 
