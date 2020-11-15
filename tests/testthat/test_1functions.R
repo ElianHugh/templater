@@ -62,10 +62,10 @@ test_that("use_template() functions correctly", {
             "Package" = "templater"
         )
     # Due to permission issues, have to  skip on non-windows OS
-    #skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "linux", "solaris"))
     expect_error(use_template(loc, s, name, check, curr_data), NA)
 
-    #skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "linux", "solaris"))
     expect_message(use_template(loc, s, name, check, curr_data),
     "templater: error in document creation...")
 })
@@ -79,6 +79,6 @@ test_that("create_custom_template() functions correctly", {
     input$rmd_input <- "Lorem ipsum"
 
     # Due to permission issues, have to  skip on non-windows OS
-    #skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "linux", "solaris"))
     expect_error(create_custom_template(input), NA)
 })
