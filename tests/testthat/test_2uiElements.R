@@ -14,4 +14,5 @@ test_that("uiElements are all of class shiny.tag", {
 
 test_that("templater_ui is of class shiny.tag.list", {
     expect_true("shiny.tag.list" %in% class(templater_ui(wd = getwd())))
+    expect_is(htmltools::findDependencies(templater_ui(getwd())), "list")
 })

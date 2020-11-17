@@ -7,14 +7,18 @@
 templater()
 }
 \description{
-\itemize{
-\item TODO
-}
+Opens the templater shiny gadget, allowing
+for template usage and creation.
 }
 \examples{
 \dontrun{
 if(interactive()) {
-    templater()
+   templater()
  }
 }
+}
+\seealso{
+\code{\link[shiny]{runGadget}},
+\code{\link[shiny]{shinyApp}},
+\code{\link[shiny]{viewer}}
 }

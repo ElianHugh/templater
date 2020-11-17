@@ -1,18 +1,20 @@
 #' @title Call templater
-#' @description * TODO
+#' @description Opens the templater shiny gadget, allowing
+#' for template usage and creation.
+#' @return NULL
 #' @examples
 #' \dontrun{
 #' if(interactive()) {
-#'     templater()
+#'    templater()
 #'  }
 #' }
-#' @export
+#' @seealso
+#'  \code{\link[shiny]{runGadget}},
+#'  \code{\link[shiny]{shinyApp}},
+#'  \code{\link[shiny]{viewer}}
 #' @rdname templater
-#' @importFrom shiny reactive observe observeEvent
-#' updateCheckboxInput updateTextInput stopApp shinyApp
-#' @importFrom DT renderDT
-#' @importFrom shinyjs toggleState
-#' @importFrom easycsv choose_dir
+#' @export
+#' @importFrom shiny runGadget shinyApp paneViewer
 templater <- function() {
     wd <- if (!is.null(getwd())) getwd() else ""
     ui <- templater_ui(wd)

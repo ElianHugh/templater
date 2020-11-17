@@ -2,16 +2,16 @@
 % Please edit documentation in R/functions.R
 \name{get_package_templates}
 \alias{get_package_templates}
-\title{get package templates}
+\title{Get Package Templates}
 \usage{
 get_package_templates()
 }
 \value{
-tibble
+data.frame
 }
 \description{
-Find all package templates stored locally on the computer,
-return a dataframe for later use.
+Find all package templates stored
+locally on the computer, return a dataframe for later use.
 }
 \examples{
 \dontrun{
@@ -19,4 +19,11 @@ if(interactive()) {
  get_package_templates()
  }
 }
+}
+\seealso{
+\code{\link[purrr]{map}}
+\code{\link[dplyr]{mutate}},
+\code{\link[dplyr]{relocate}},
+\code{\link[dplyr]{reexports}}
+\code{\link[stringr]{str_extract}}
 }

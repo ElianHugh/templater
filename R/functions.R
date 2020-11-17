@@ -1,3 +1,52 @@
+#' @title Get Package Templates
+#' @description Find all package templates stored
+#' locally on the computer, return a dataframe for later use.
+#' @return data.frame
+#' @examples
+#' \dontrun{
+#' if(interactive()) {
+#'  get_package_templates()
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[purrr]{map}}
+#'  \code{\link[dplyr]{mutate}},
+#'  \code{\link[dplyr]{relocate}},
+#'  \code{\link[dplyr]{reexports}}
+#'  \code{\link[stringr]{str_extract}}
+#' @rdname get_package_templates
+#' @export
+#' @importFrom purrr map_df
+#' @importFrom dplyr mutate relocate everything
+#' @importFrom stringr str_extract
+get_package_templates <- function() {
+    pattern <- "[A-Za-z0-9_ ]+(?=/+(rmarkdown(?!.*rmarkdown)))"
+    temp_name_pat <- "[A-Za-z0-9_ ]+(?=/+template.yaml)"
+    paths <- get_paths(.libPaths(), "*template.yaml")
+
+    # Appeasing R CMD check
+    Package <- NULL
+    name <- NULL
+    description <- NULL
+
+    if (!is.null(paths) | length(paths) > 0) {
+        temp_frame <- paths %>%
+            purrr::map_df(get_yaml) %>%
+            dplyr::mutate(
+                Temp = stringr::str_extract(paths, temp_name_pat),
+                Package = stringr::str_extract(paths, pattern),
+                PkgDisplay = paste0("{", Package, "}"),
+            ) %>%
+            dplyr::relocate(
+                name,
+                description,
+                dplyr::everything()
+            )
+        return(temp_frame)
+    } else {
+        NULL
+    }
+}
 
 get_yaml <- function(path) {
     x <- yaml::read_yaml(path)
@@ -9,53 +58,17 @@ get_yaml <- function(path) {
     return(x)
 }
 
-#' @title get package templates
-#' @description Find all package templates stored locally on the computer,
-#' return a dataframe for later use.
-#' @return tibble
-#' @examples
-#' \dontrun{
-#' if(interactive()) {
-#'  get_package_templates()
-#'  }
-#' }
-#' @export
-#' @rdname get_package_templates
-#' @import purrr
-#' @import yaml
-#' @import tibble
-#' @import dplyr
-#' @import stringr
-get_package_templates <- function() {
-    pattern <- "[A-Za-z0-9_ ]+(?=/+(rmarkdown(?!.*rmarkdown)))"
-    temp_name_pat <- "[A-Za-z0-9_ ]+(?=/+template.yaml)"
-    paths <- get_paths(.libPaths(), "*template.yaml")
-
-    # Appeasing R CMD check
-    Package <- NULL
-    name <- NULL
-    description <- NULL
-
-    # * TODO fix rmarkdown package templates 
-    # * with wrong package name
-    if (!is.null(paths) | length(paths) > 0) {
-        temp_frame <- paths %>%
-            purrr::map_df(get_yaml) %>%
-            dplyr::mutate(
-                Temp = stringr::str_extract(paths, temp_name_pat),
-                Package = stringr::str_extract(paths, pattern),
-                PkgDisplay = paste0("{", Package, "}"),
-            ) %>%
-            dplyr::relocate(
-                name, 
-                description, 
-                dplyr::everything()
-            )
-        return(temp_frame)
-    } else {
-        NULL
-    }
+get_paths <- function(vec, glob) {
+    paths <- fs::dir_ls(
+        path = vec,
+        recurse = TRUE,
+        type = "file",
+        glob = glob,
+        fail = FALSE
+    )
+    return(unlist(paths))
 }
+
 
 use_template  <- function(loc, s, name, check, curr_data) {
     conc_path <- paste0(
@@ -96,6 +109,32 @@ use_template  <- function(loc, s, name, check, curr_data) {
     }
 }
 
+#' @title Create a template
+#' @description Create a user-defined template, saved in the
+#' templater package folder.
+#' @param input
+#' input$template_name_input (template name)
+#' input$template_desc_input (template description)
+#' input$rmd_input (template body)
+#' @return NULL
+#' @examples
+#' \dontrun{
+#' if(interactive()) {
+#'  input <- NULL
+#'  input$template_name_input <- "Title"
+#'  input$template_desc_input <- "A description"
+#'  input$rmd_input <- "Lorem ipsum"
+#'  create_custom_template(input)
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[fs]{create}},
+#'  \code{\link[fs]{file_access}}
+#'  \code{\link[rstudioapi]{isAvailable}},
+#'  \code{\link[rstudioapi]{showDialog}}
+#' @rdname create_custom_template
+#' @export
+#' @importFrom fs dir_create file_create file_exists
 create_custom_template <- function(input) {
     template_name  <- input$template_name_input
     template_desc <- input$template_desc_input
@@ -154,18 +193,6 @@ create_custom_template <- function(input) {
          }
     }
 
-
-}
-
-get_paths <- function(vec, glob) {
-    paths <- fs::dir_ls(
-        path = vec,
-        recurse = TRUE,
-        type = "file",
-        glob = glob,
-        fail = FALSE
-    )
-    return(unlist(paths))
 }
 
 get_writeable_lib <- function() {
