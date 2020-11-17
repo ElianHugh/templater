@@ -1,12 +1,13 @@
 test_that("get_package_templates() functions correctly", {
     rmd <- get_package_templates()
     expect_false(is.null(rmd))
-    expect_gt(nrow(rmd), 0)
+    expect_gte(nrow(rmd), 0)
 })
 
 test_that("get_paths() returns file paths", {
     paths <- get_paths(.libPaths(), "*template.yaml")
-    expect_gt(length(paths), 0)
+    expect_false(is.null(paths))
+    expect_gte(length(paths), 0)
 })
 
 test_that("check_valid() detects input correctly", {
