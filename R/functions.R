@@ -27,23 +27,29 @@ get_yaml <- function(path) {
 #' @import dplyr
 #' @import stringr
 get_package_templates <- function() {
-    pattern <- "[A-Za-z0-9_ ]+(?=/+rmarkdown)"
+    pattern <- "[A-Za-z0-9_ ]+(?=/+(rmarkdown(?!.*rmarkdown)))"
     temp_name_pat <- "[A-Za-z0-9_ ]+(?=/+template.yaml)"
     paths <- get_paths(.libPaths(), "*template.yaml")
 
     # Appeasing R CMD check
     Package <- NULL
+    name <- NULL
+    description <- NULL
 
+    # * TODO fix rmarkdown package templates 
+    # * with wrong package name
     if (!is.null(paths) | length(paths) > 0) {
         temp_frame <- paths %>%
             purrr::map_df(get_yaml) %>%
             dplyr::mutate(
                 Temp = stringr::str_extract(paths, temp_name_pat),
-                Package = dplyr::case_when(
-                        stringr::str_extract(paths, pattern) == 0 ~ "rmarkdown",
-                        TRUE ~ stringr::str_extract(paths, pattern)
-                    ),
+                Package = stringr::str_extract(paths, pattern),
                 PkgDisplay = paste0("{", Package, "}"),
+            ) %>%
+            dplyr::relocate(
+                name, 
+                description, 
+                dplyr::everything()
             )
         return(temp_frame)
     } else {

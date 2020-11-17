@@ -56,7 +56,7 @@ templater_table <- function(data) {
             ),
             rowCallback = DT::JS(
             "function(row, data) {",
-            "var full_text = data[2]",
+            "var full_text = data[1]",
             "$('td', row).attr('title', full_text);",
             "}"),
             scrollY = "30vh",
