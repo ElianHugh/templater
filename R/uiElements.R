@@ -89,6 +89,7 @@ templater_creator <- function() {
                 pattern = "[(a-zA-Z0-9_ )]*",
                 title = "Must be a valid file name.",
                 id = "template_name_input",
+                style = "width: 80%;"
         ),
         shiny::p(shiny::strong("Template Description")),
         shiny::textAreaInput(
@@ -102,6 +103,7 @@ templater_creator <- function() {
         shiny::textAreaInput(
             inputId = "rmd_input",
             label = NULL,
+            placeholder = "Lorem ipsum",
             resize = "vertical",
             width = "100%"
         )

@@ -1,5 +1,5 @@
 templater_server <- function(input, output, session) {
-curr_data <- get_package_templates()
+    curr_data <- get_package_templates()
     # Reactive Variables
     curr_path <- shiny::reactive({
         loc <- input$dir_input

@@ -217,15 +217,16 @@ check_valid  <- function(input, curr_path) {
 
 check_input <- function(input) {
     if (is.null(input$template_name_input) |
-       is.null(input$template_desc_input) |
-       is.null(input$rmd_input)) {
-           return(FALSE)
-       } else if (input$template_name_input != "" &&
+        is.null(input$template_desc_input) |
+        is.null(input$rmd_input)) {
+        return(FALSE)
+    } else if (input$template_name_input != "" &&
         input$template_desc_input != "" &&
         input$rmd_input != "" &&
         !grepl(input$template_name_input,
-        pattern = "[^(a-zA-Z0-9_ ]",
-        perl = TRUE)) {
+            pattern = "[^(a-zA-Z0-9_ ]",
+            perl = TRUE
+        )) {
         return(TRUE)
     } else {
         return(FALSE)
