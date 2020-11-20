@@ -54,3 +54,27 @@ test_that("check check_valid reactivity", {
         }
     )
 })
+
+test_that("check name_valid reactivity", {
+    shiny::testServer(
+        app = shiny::shinyApp(
+            ui <- templater_ui(getwd()),
+            templater_server
+        ), {
+            expect_false(name_valid())
+            session$setInputs(
+                name_input = ""
+            )
+            expect_false(name_valid())
+            session$setInputs(
+                name_input = "$%#test"
+            )
+            expect_false(name_valid())
+
+            session$setInputs(
+                name_input = "Valid"
+            )
+            expect_true(name_valid())
+        }
+    )
+})

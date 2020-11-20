@@ -14,9 +14,12 @@ test_that("check_valid() detects input correctly", {
     input <- NULL
     input$table_rows_selected <- TRUE
     input$name_input <- "test all0wed characters"
-    expect_true(check_valid(input, ""))
+    expect_true(check_valid(input, "", TRUE))
     input$name_input <- "test d|sallowed ch@racter?"
-    expect_false(check_valid(input, ""))
+    expect_false(check_valid(input, "", FALSE))
+    input$table_rows_selected <- NULL
+    input$name_input <- "Allowed"
+    expect_false(check_valid(input, "", TRUE))
 })
 
 test_that("check_input() detects input correctly", {

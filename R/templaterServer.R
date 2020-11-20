@@ -25,6 +25,18 @@ templater_server <- function(input, output, session) {
         return(path)
     })
 
+    name_valid <- shiny::reactive({
+        name <- input$name_input
+        if (!is.null(name) &&
+           name != "" &&
+           !grepl(name, pattern = "[^(a-zA-Z0-9_ ]", perl = TRUE)) {
+                return(TRUE)
+        } else {
+                return(FALSE)
+        }
+    })
+
+
     ## Template list
     output$table <- DT::renderDT({
         templater_table(curr_data)
@@ -34,7 +46,7 @@ templater_server <- function(input, output, session) {
     ## Reactive confirm
     shiny::observe({
         if (input$nav != "Create Templates" &&
-        check_valid(input, curr_path())) {
+        check_valid(input, curr_path(), name_valid())) {
                 shinyjs::enable(id = "done")
         } else if (check_input(input)) {
                 shinyjs::enable(id = "done")

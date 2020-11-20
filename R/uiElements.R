@@ -83,29 +83,29 @@ templater_creator <- function() {
         class = "templateDetails",
         shiny::p(shiny::strong("Template Name")),
         shiny::tags$input(
-                placeholder = "untitled",
+                id = "template_name_input",
                 class = "form-control",
                 type = "text",
-                pattern = "[(a-zA-Z0-9_ )]*",
                 title = "Must be a valid file name.",
-                id = "template_name_input",
+                placeholder = "untitled",
+                pattern = "[(a-zA-Z0-9_ )]*",
                 style = "width: 80%;"
         ),
         shiny::p(shiny::strong("Template Description")),
-        shiny::textAreaInput(
-            "template_desc_input",
-            label = NULL,
+        shiny::tags$textarea(
+            id = "template_desc_input",
+            class = "form-control",
             placeholder = "My custom template.",
-            resize = "vertical",
-            width = "100%"
+            style = "width: 90%; resize: vertical;",
+            rows = "5"
         ),
         shiny::p(shiny::strong("Body")),
-        shiny::textAreaInput(
-            inputId = "rmd_input",
-            label = NULL,
+        shiny::tags$textarea(
+            id = "rmd_input",
+            class = "form-control",
             placeholder = "Lorem ipsum",
-            resize = "vertical",
-            width = "100%"
+            style = "width: 90%; resize: vertical;",
+            rows = "5"
         )
     )
 }

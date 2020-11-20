@@ -203,12 +203,10 @@ get_writeable_lib <- function() {
 
 # * TODO make use of reactivity to
 # refactor this
-check_valid  <- function(input, curr_path) {
+check_valid  <- function(input, curr_path, name_valid) {
     if (!is.null(input$table_rows_selected) &&
         !fs::file_access(path = curr_path, mode = "exists") &&
-            !is.null(input$name_input) &&
-            input$name_input != "" &&
-        !grepl(input$name_input, pattern = "[^(a-zA-Z0-9_ ]", perl = TRUE)) {
+            name_valid) {
             return(TRUE)
     } else {
             return(FALSE)

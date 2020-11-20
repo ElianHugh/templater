@@ -36,6 +36,7 @@ templater_ui <- function(wd) {
             miniUI::miniTabPanel("Create Templates",
                 icon = shiny::icon("edit"),
                 miniUI::miniContentPanel(
+                    style = "overflow-y: auto;",
                     templater_creator()
                 )
             )
