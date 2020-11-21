@@ -1,5 +1,17 @@
 templater_server <- function(input, output, session) {
+
     curr_data <- get_package_templates()
+
+    # Error Messages
+    if ("Faulty_YAML" %in% unlist(curr_data)) {
+        shiny::showNotification(
+            "Faulty YAML detected in a template.
+            There may be an issue with a custom-template.",
+            duration = 10,
+            type = "warning"
+        )
+    }
+
     # Reactive Variables
     curr_path <- shiny::reactive({
         loc <- input$dir_input

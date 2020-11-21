@@ -195,6 +195,20 @@ create_custom_template <- function(input) {
 
 }
 
+#' @title Get Writeable Library
+#' @description Returns the first writeable R library found.
+#' @return file path
+#' @examples
+#' \dontrun{
+#' if(interactive()) {
+#'   get_writeable_lib()
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[fs]{file_access}}
+#' @rdname get_writeable_lib
+#' @export
+#' @importFrom fs file_access
 get_writeable_lib <- function() {
     lib <- .libPaths()
     writeable <- fs::file_access(lib, mode = "write")

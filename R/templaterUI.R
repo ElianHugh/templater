@@ -6,7 +6,7 @@ templater_ui <- function(wd) {
                 type = "text/css",
                 href = "templater/styles.css"
             ),
-            htmltools::tags$script(src = "templater/app.js")
+            htmltools::tags$script(src = "templater/resize-area.js")
         )),
         miniUI::gadgetTitleBar("templater::",
         right = miniUI::miniTitleBarButton(

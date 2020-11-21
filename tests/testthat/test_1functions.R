@@ -55,10 +55,14 @@ test_that("get_yaml() functions correctly", {
     expect_equal(x$path, "../testdata/Correct_YAML/template.yaml")
 })
 
+test_that("get_writeable_lib() functions correctly", {
+    expect_error(get_writeable_lib(), NA)
+})
+
 test_that("use_template() functions correctly", {
     expect_error(use_template())
 
-    loc <- path.expand('~')
+    loc <- path.expand("~")
     s <- 1
     name <- "document"
     check <- FALSE
