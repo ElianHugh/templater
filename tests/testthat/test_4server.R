@@ -32,9 +32,9 @@ test_that("check check_input reactivity", {
                 template_desc_input = "Description",
                 rmd_input = "Lorem ipsum"
             )
-            expect_true(check_input(input))
+            expect_true(check_input())
             session$setInputs(template_name_input = NULL)
-            expect_false(check_input(input))
+            expect_error(check_input())
         }
     )
 })
@@ -50,7 +50,7 @@ test_that("check check_valid reactivity", {
                 name_input = "document",
                 check_input = TRUE
             )
-            expect_false(check_valid(input, curr_path()))
+            expect_error(check_valid())
         }
     )
 })
@@ -61,11 +61,11 @@ test_that("check name_valid reactivity", {
             ui <- templater_ui(getwd()),
             templater_server
         ), {
-            expect_false(name_valid())
+            expect_error(name_valid())
             session$setInputs(
                 name_input = ""
             )
-            expect_false(name_valid())
+            expect_error(name_valid())
             session$setInputs(
                 name_input = "$%#test"
             )

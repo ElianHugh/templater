@@ -10,37 +10,6 @@ test_that("get_paths() returns file paths", {
     expect_gte(length(paths), 0)
 })
 
-test_that("check_valid() detects input correctly", {
-    input <- NULL
-    input$table_rows_selected <- TRUE
-    input$name_input <- "test all0wed characters"
-    expect_true(check_valid(input, "", TRUE))
-    input$name_input <- "test d|sallowed ch@racter?"
-    expect_false(check_valid(input, "", FALSE))
-    input$table_rows_selected <- NULL
-    input$name_input <- "Allowed"
-    expect_false(check_valid(input, "", TRUE))
-})
-
-test_that("check_input() detects input correctly", {
-    input <- NULL
-    input$template_name_input <- "Template Name"
-    input$template_desc_input <- "Template Desc"
-    input$rmd_input <- "Body"
-    expect_true(check_input(input))
-    input$template_name_input <- ""
-    input$template_desc_input <- ""
-    input$rmd_input <- ""
-    expect_false(check_input(input))
-    input$template_name_input <- NULL
-    input$template_desc_input <- NULL
-    input$rmd_input <- NULL
-    expect_false(check_input(input))
-    input$template_name_input <- "test d|sallowed ch@racter"
-    input$template_desc_input <- ""
-    expect_false(check_input(input))
-})
-
 test_that("get_yaml() functions correctly", {
     expect_error(get_yaml())
 
@@ -67,10 +36,10 @@ test_that("use_template() functions correctly", {
     name <- "document"
     check <- FALSE
     curr_data <- data.frame(
-            "Temp" = "basic_word",
-            "Package" = "templater"
-        )
-    # Due to permission issues, have to  skip on non-windows OS
+        "Temp" = "basic_word",
+        "Package" = "templater"
+    )
+
     expect_error(use_template(loc, s, name, check, curr_data), NA)
     fs::file_delete(paste0(loc, "/", name, ".Rmd"))
 

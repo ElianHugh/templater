@@ -45,6 +45,12 @@ shiny::div(
 }
 
 templater_table <- function(data) {
+    name <- NULL
+    Package <- NULL
+
+    data <- data %>%
+        dplyr::filter(name != "FAULTY YAML" & !is.na(Package))
+
     DT::datatable(data,
         rownames = FALSE,
         selection = "single",
@@ -65,7 +71,8 @@ templater_table <- function(data) {
             paging = FALSE,
             language = list(
                 search = "",
-                searchPlaceholder = "Search"
+                searchPlaceholder = "Search",
+                zeroRecords = "No matching templates found"
             ),
             searchDelay = 0,
             columnDefs = list(

@@ -16,13 +16,16 @@
 #' @export
 #' @importFrom shiny runGadget shinyApp paneViewer
 templater <- function() {
-    wd <- if (!is.null(getwd())) getwd() else ""
-    ui <- templater_ui(wd)
     shiny::runGadget(
         shiny::shinyApp(
-            ui,
+            templater_ui,
             templater_server
         ),
-        viewer = shiny::paneViewer(minHeight = "maximize")
+        viewer = if("tools:vscode" %in% search() == TRUE) {
+                shiny::paneViewer("R Templater")
+            } else {
+                # Min Height only works in RStudio
+                shiny::paneViewer(minHeight = "maximize")
+            }
     )
 }

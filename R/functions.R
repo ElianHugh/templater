@@ -69,7 +69,6 @@ get_paths <- function(vec, glob) {
     return(unlist(paths))
 }
 
-
 use_template  <- function(loc, s, name, check, curr_data) {
     conc_path <- paste0(
         loc,
@@ -213,34 +212,4 @@ get_writeable_lib <- function() {
     lib <- .libPaths()
     writeable <- fs::file_access(lib, mode = "write")
     return(names(which(writeable == TRUE)[1]))
-}
-
-# * TODO make use of reactivity to
-# refactor this
-check_valid  <- function(input, curr_path, name_valid) {
-    if (!is.null(input$table_rows_selected) &&
-        !fs::file_access(path = curr_path, mode = "exists") &&
-            name_valid) {
-            return(TRUE)
-    } else {
-            return(FALSE)
-    }
-}
-
-check_input <- function(input) {
-    if (is.null(input$template_name_input) |
-        is.null(input$template_desc_input) |
-        is.null(input$rmd_input)) {
-        return(FALSE)
-    } else if (input$template_name_input != "" &&
-        input$template_desc_input != "" &&
-        input$rmd_input != "" &&
-        !grepl(input$template_name_input,
-            pattern = "[^(a-zA-Z0-9_ ]",
-            perl = TRUE
-        )) {
-        return(TRUE)
-    } else {
-        return(FALSE)
-    }
 }
