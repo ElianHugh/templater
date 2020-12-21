@@ -11,4 +11,6 @@ r-packages:
 
 after_success:
   - R CMD INSTALL $PKG_TARBALL
+  - Rscript -e 'install_packages("remotes")'
+  - Rscript -e 'remotes::install_github("rstudio/shiny", force = TRUE)'
   - Rscript -e 'covr::codecov()'
