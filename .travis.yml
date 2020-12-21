@@ -21,6 +21,7 @@ before_install:
 install:
   - ./run.sh install_all
   - Rscript -e "remotes::install_github('rstudio/shiny', force = TRUE)"
+  - Rscript -e "install.packages('covr'')"
 
 script:
   - ./run.sh run_tests
@@ -29,4 +30,4 @@ after_failure:
   - ./run.sh dump_logs
 
 after_success:
-  - ./run.sh coverage
+  - Rscript -e 'covr::codecov()'
