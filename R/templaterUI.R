@@ -1,4 +1,4 @@
-templater_ui <- function(input, output, session) {
+templater_ui <- function() {
     htmltools::tagList(
         shinyjs::useShinyjs(),
         miniUI::miniPage(

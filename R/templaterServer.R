@@ -1,15 +1,21 @@
 templater_server <- function(input, output, session) {
-
     curr_data <- get_package_templates()
 
     # Error Messages
-    if ("Faulty_YAML" %in% unlist(curr_data)) {
-        shiny::showNotification(
-            paste0("Faulty YAML detected in package/s:\n",
-            toString( curr_data[curr_data$name == "FAULTY YAML", ]$Package)),
-            duration = 6,
-            type = "warning"
-        )
+    if (interactive()) {
+        shiny::req(curr_data)
+        if ("Faulty_YAML" %in% unlist(curr_data)) {
+            shiny::showNotification(
+                paste0(
+                    "Faulty YAML detected in package/s:\n",
+                    toString(
+                        curr_data[curr_data$name == "FAULTY YAML", ]$Package
+                    )
+                ),
+                duration = 6,
+                type = "warning"
+            )
+        }
     }
 
     # Reactive Variables
@@ -17,7 +23,7 @@ templater_server <- function(input, output, session) {
         loc <- input$dir_input
         name <- input$name_input
         check <- input$check_input
-        if (check) {
+        if (check == TRUE) {
             path <- paste0(
                 loc,
                 "/",
@@ -39,17 +45,18 @@ templater_server <- function(input, output, session) {
 
     name_valid <- shiny::reactive({
         shiny::req(input$name_input)
-         if (!grepl(
-                input$name_input,
-                pattern = "[^(a-zA-Z0-9_ ]",
-                perl = TRUE)) {
+        if (!grepl(
+            input$name_input,
+            pattern = "[^(a-zA-Z0-9_ ]",
+            perl = TRUE
+        )) {
             return(TRUE)
         } else {
             return(FALSE)
         }
     })
 
-    check_valid  <- shiny::reactive({
+    check_valid <- shiny::reactive({
         shiny::req(input$table_rows_selected)
         if (name_valid() &&
             !fs::file_access(path = curr_path(), mode = "exists")) {
@@ -59,20 +66,21 @@ templater_server <- function(input, output, session) {
         }
     })
 
-    check_input  <- shiny::reactive({
+    validate_custom_input <- shiny::reactive({
         shiny::req(
             input$template_name_input,
             input$template_desc_input,
             input$rmd_input
         )
         if (!grepl(input$template_name_input,
-              pattern = "[^(a-zA-Z0-9_ ]",
-              perl = TRUE)
-              ) {
-              return(TRUE)
-          } else {
-              return(FALSE)
-          }
+            pattern = "[^(a-zA-Z0-9_ ]",
+            perl = TRUE
+        )
+        ) {
+            return(TRUE)
+        } else {
+            return(FALSE)
+        }
     })
 
     ## Template list
@@ -82,15 +90,21 @@ templater_server <- function(input, output, session) {
 
     ## Reactive confirm
     shiny::observe({
+        shiny::req(input$nav)
         if (input$nav != "Create Templates") {
             if (check_valid()) {
                 shinyjs::enable(id = "done")
             } else {
                 shinyjs::disable(id = "done")
             }
-        } else if (check_input()) {
-            shinyjs::enable(id = "done")
-    }})
+        } else {
+            if (validate_custom_input()) {
+                shinyjs::enable(id = "done")
+            } else {
+                shinyjs::disable(id = "done")
+            }
+        }
+    })
 
     ## Tick Event
     shiny::observeEvent(input$table_rows_selected, {
@@ -116,24 +130,25 @@ templater_server <- function(input, output, session) {
         )
     })
 
-    ## Confirm
+    # Confirm
     shiny::observeEvent(input$done, {
+        shiny::req(input$nav)
         if (input$nav != "Create Templates") {
-              if (check_valid() == TRUE) {
-                  use_template(
-                      loc   = input$dir_input,
-                      s     = input$table_rows_selected,
-                      name  = input$name_input,
-                      check = input$check_input,
-                      curr_data
-                  )
-                  shiny::stopApp(returnValue = invisible())
-              } else {
-                  message(
-                      "\nThere was an error during document creation.
+            if (check_valid() == TRUE) {
+                use_template(
+                    loc   = input$dir_input,
+                    s     = input$table_rows_selected,
+                    name  = input$name_input,
+                    check = input$check_input,
+                    curr_data
+                )
+                shiny::stopApp(returnValue = invisible())
+            } else {
+                message(
+                    "\nThere was an error during document creation.
                       \nAll parameters must be used."
-                  )
-              }
+                )
+            }
         } else {
             create_custom_template(input)
             shiny::stopApp(returnValue = invisible())

@@ -41,13 +41,17 @@ test_that("use_template() functions correctly", {
     )
 
     expect_error(use_template(loc, s, name, check, curr_data), NA)
-    fs::file_delete(paste0(loc, "/", name, ".Rmd"))
+    if (fs::file_exists(paste0(loc, "/", name, ".Rmd"))) {
+        fs::file_delete(paste0(loc, "/", name, ".Rmd"))
+    }
 
     expect_message(
         use_template(loc, s, name, check, curr_data),
         "templater created document at:"
     )
-    fs::file_delete(paste0(loc, "/", name, ".Rmd"))
+    if (fs::file_exists(paste0(loc, "/", name, ".Rmd"))) {
+        fs::file_delete(paste0(loc, "/", name, ".Rmd"))
+    }
 })
 
 test_that("create_custom_template() functions correctly", {
