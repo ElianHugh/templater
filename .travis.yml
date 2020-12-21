@@ -20,7 +20,8 @@ before_install:
 
 install:
   - ./run.sh install_all
-  - Rscript -e 'remotes::install_github('rstudio/shiny', force = TRUE)'
+  - Rscript -e "remotes::install_github('rstudio/shiny', force = TRUE)"
+
 script:
   - ./run.sh run_tests
 
