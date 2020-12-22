@@ -15,9 +15,9 @@ locally on the computer, return a dataframe for later use.
 }
 \examples{
 \dontrun{
-if(interactive()) {
- get_package_templates()
- }
+if (interactive()) {
+    get_package_templates()
+}
 }
 }
 \seealso{

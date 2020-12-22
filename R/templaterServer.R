@@ -5,16 +5,26 @@ templater_server <- function(input, output, session) {
     if (interactive()) {
         shiny::req(curr_data)
         if ("Faulty_YAML" %in% unlist(curr_data)) {
-            shiny::showNotification(
-                paste0(
-                    "Faulty YAML detected in package/s:\n",
-                    toString(
-                        curr_data[curr_data$name == "FAULTY YAML", ]$Package
-                    )
-                ),
-                duration = 6,
-                type = "warning"
+            packages <- toString(
+                unique(
+                    curr_data[curr_data$faulty == TRUE, ]$Package
+                )
             )
+            paths  <- toString(curr_data[curr_data$faulty == TRUE, ]$path)
+            if (isNamespaceLoaded("rstudioapi") && rstudioapi::isAvailable()) {
+                rstudioapi::showDialog(
+                    title = "Templater",
+                    message = packages,
+                    url = paths
+                )
+            } else {
+                message(paste0(
+                    "Faulty YAML detected in package/s: ",
+                    packages,
+                    "\n",
+                    paths
+                ))
+            }
         }
     }
 
@@ -43,7 +53,9 @@ templater_server <- function(input, output, session) {
         return(path)
     })
 
-    name_valid <- shiny::reactive({
+    # Ensure that the text input is a valid name
+    # i.e. no invalid characters
+    validate_name <- shiny::reactive({
         shiny::req(input$name_input)
         if (!grepl(
             input$name_input,
@@ -56,16 +68,27 @@ templater_server <- function(input, output, session) {
         }
     })
 
-    check_valid <- shiny::reactive({
-        shiny::req(input$table_rows_selected)
-        if (name_valid() &&
-            !fs::file_access(path = curr_path(), mode = "exists")) {
+    # Ensure that the current path is not occupied
+    validate_path  <- shiny::reactive({
+        shiny::req(input$name_input, curr_path())
+        if (!fs::file_access(path = curr_path(), mode = "exists")) {
             return(TRUE)
         } else {
             return(FALSE)
         }
     })
 
+    # Ensure name and path are valid
+    validate_input <- shiny::reactive({
+        shiny::req(input$table_rows_selected)
+        if (validate_name() && validate_path()) {
+            return(TRUE)
+        } else {
+            return(FALSE)
+        }
+    })
+
+    # Ensure custom template name is a valid name
     validate_custom_input <- shiny::reactive({
         shiny::req(
             input$template_name_input,
@@ -92,7 +115,7 @@ templater_server <- function(input, output, session) {
     shiny::observe({
         shiny::req(input$nav)
         if (input$nav != "Create Templates") {
-            if (check_valid()) {
+            if (validate_input()) {
                 shinyjs::enable(id = "done")
             } else {
                 shinyjs::disable(id = "done")
@@ -134,7 +157,7 @@ templater_server <- function(input, output, session) {
     shiny::observeEvent(input$done, {
         shiny::req(input$nav)
         if (input$nav != "Create Templates") {
-            if (check_valid() == TRUE) {
+            if (validate_input() == TRUE) {
                 use_template(
                     loc   = input$dir_input,
                     s     = input$table_rows_selected,
@@ -150,9 +173,23 @@ templater_server <- function(input, output, session) {
                 )
             }
         } else {
+            shiny::req(
+                input$template_name_input,
+                input$template_desc_input,
+                input$rmd_input
+            )
             create_custom_template(input)
             shiny::stopApp(returnValue = invisible())
         }
+    })
+
+    shiny::observe({
+        shiny::req(input$dir_input)
+        shinyjs::toggleCssClass(
+            id = "dir_input",
+            class = "invalid",
+            condition = validate_path()
+        )
     })
 
     # Exit Handle

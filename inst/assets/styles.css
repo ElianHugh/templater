@@ -44,7 +44,7 @@ div.gadget-scroll {
 
 /* Text Input CSS */
 
-input:invalid {
+input:invalid, .invalid {
 	border: 1px solid;
 	border-radius: 4px;
 	outline: none !important;

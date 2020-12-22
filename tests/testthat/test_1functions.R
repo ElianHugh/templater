@@ -14,14 +14,16 @@ test_that("get_yaml() functions correctly", {
     expect_error(get_yaml())
 
     x <- get_yaml(("../testdata/Faulty_YAML/template.yaml"))
-    expect_equal(x$name, "FAULTY YAML")
-    expect_equal(x$description, "FAULTY YAML")
+    expect_equal(x$name, "Faulty_YAML")
+    expect_equal(x$description, "Faulty_YAML")
     expect_equal(x$path, "../testdata/Faulty_YAML/template.yaml")
+    expect_true(x$faulty)
 
     x <- get_yaml(("../testdata/Correct_YAML/template.yaml"))
     expect_equal(x$name, "Basic Word")
     expect_equal(x$description, "A basic markdown template for Word outputs.\n")
     expect_equal(x$path, "../testdata/Correct_YAML/template.yaml")
+    expect_false(x$faulty)
 })
 
 test_that("get_writeable_lib() functions correctly", {

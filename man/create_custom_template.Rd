@@ -17,13 +17,13 @@ templater package folder.
 }
 \examples{
 \dontrun{
-if(interactive()) {
- input <- NULL
- input$template_name_input <- "Title"
- input$template_desc_input <- "A description"
- input$rmd_input <- "Lorem ipsum"
- create_custom_template(input)
- }
+if (interactive()) {
+    input <- NULL
+    input$template_name_input <- "Title"
+    input$template_desc_input <- "A description"
+    input$rmd_input <- "Lorem ipsum"
+    create_custom_template(input)
+}
 }
 }
 \seealso{

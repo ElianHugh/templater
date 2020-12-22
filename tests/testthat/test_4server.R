@@ -33,7 +33,7 @@ test_that("validate_custom_input() reactivity is functioning", {
     })
 })
 
-test_that("check_valid true reactivity is functioning (1/2)", {
+test_that("validate_input true reactivity is functioning (1/2)", {
     if (fs::file_exists("~/foo.Rmd")) {
         fs::file_delete("~/foo.Rmd")
     }
@@ -47,23 +47,23 @@ test_that("check_valid true reactivity is functioning (1/2)", {
             name_input = "foo",
             check_input = FALSE
         )
-        expect_error(check_valid())
+        expect_error(validate_input())
 
         session$setInputs(
             table_rows_selected = 1
         )
-        expect_true(check_valid())
+        expect_true(validate_input())
 
         session$setInputs(
             dir_input = "~",
             name_input = "foo",
             check_input = TRUE
         )
-        expect_true(check_valid())
+        expect_true(validate_input())
     })
 })
 
-test_that("check_valid false reactivity is functioning (2/2)", {
+test_that("validate_input false reactivity is functioning (2/2)", {
     if (!fs::file_exists("~/foo.Rmd")) {
         fs::file_create("~/foo.Rmd")
     }
@@ -77,12 +77,12 @@ test_that("check_valid false reactivity is functioning (2/2)", {
             name_input = "foo",
             check_input = FALSE
         )
-        expect_error(check_valid())
+        expect_error(validate_input())
 
         session$setInputs(
             table_rows_selected = 1
         )
-        expect_false(check_valid())
+        expect_false(validate_input())
         session$setInputs(
             dir_input = "~",
             name_input = "bar",
@@ -91,15 +91,15 @@ test_that("check_valid false reactivity is functioning (2/2)", {
     })
 })
 
-test_that("name_valid reactivity is functioning", {
+test_that("validate_name reactivity is functioning", {
     shiny::testServer(templater_server, {
         session$setInputs(name_input = "")
-        expect_error(name_valid())
+        expect_error(validate_name())
 
         session$setInputs(name_input = "$%#test")
-        expect_false(name_valid())
+        expect_false(validate_name())
 
         session$setInputs(name_input = "Valid")
-        expect_true(name_valid())
+        expect_true(validate_name())
     })
 })

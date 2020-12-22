@@ -4,9 +4,9 @@
 #' @return data.frame
 #' @examples
 #' \dontrun{
-#' if(interactive()) {
-#'  get_package_templates()
-#'  }
+#' if (interactive()) {
+#'     get_package_templates()
+#' }
 #' }
 #' @seealso
 #'  \code{\link[purrr]{map}}
@@ -51,9 +51,21 @@ get_package_templates <- function() {
 get_yaml <- function(path) {
     x <- yaml::read_yaml(path)
     if (is.null(x)) {
-        x$name <- "FAULTY YAML"
-        x$description <- "FAULTY YAML"
+        x$name <- "Faulty_YAML"
+        x$description <- "Faulty_YAML"
     }
+    if (is.null(x$name)) {
+        x$name <- "Faulty_YAML"
+    }
+    if (is.null(x$description)) {
+        x$description <- "Faulty_YAML"
+    }
+    if ("Faulty_YAML" %in% x) {
+        x$faulty  <- TRUE
+    } else {
+        x$faulty  <- FALSE
+    }
+
     x$path <- path
     return(x)
 }
@@ -69,7 +81,7 @@ get_paths <- function(vec, glob) {
     return(unlist(paths))
 }
 
-use_template  <- function(loc, s, name, check, curr_data) {
+use_template <- function(loc, s, name, check, curr_data) {
     conc_path <- paste0(
         loc,
         "/",
@@ -118,13 +130,13 @@ use_template  <- function(loc, s, name, check, curr_data) {
 #' @return NULL
 #' @examples
 #' \dontrun{
-#' if(interactive()) {
-#'  input <- NULL
-#'  input$template_name_input <- "Title"
-#'  input$template_desc_input <- "A description"
-#'  input$rmd_input <- "Lorem ipsum"
-#'  create_custom_template(input)
-#'  }
+#' if (interactive()) {
+#'     input <- NULL
+#'     input$template_name_input <- "Title"
+#'     input$template_desc_input <- "A description"
+#'     input$rmd_input <- "Lorem ipsum"
+#'     create_custom_template(input)
+#' }
 #' }
 #' @seealso
 #'  \code{\link[fs]{create}},
@@ -135,7 +147,7 @@ use_template  <- function(loc, s, name, check, curr_data) {
 #' @export
 #' @importFrom fs dir_create file_create file_exists
 create_custom_template <- function(input) {
-    template_name  <- input$template_name_input
+    template_name <- input$template_name_input
     template_desc <- input$template_desc_input
     templater_path <- paste0(
         get_writeable_lib(),
@@ -181,17 +193,16 @@ create_custom_template <- function(input) {
         } else {
             rstudioapi::showDialog(
                 title = "Templator",
-                "there was an error during template creation."
+                "there was an error during template creation. File already exists."
             )
         }
     } else {
-         if (fs::file_exists(skeleton_file)) {
+        if (fs::file_exists(skeleton_file)) {
             message("Templater: created template")
-         } else {
-             message("Templater: there was an error during template creation.")
-         }
+        } else {
+            message("Templater: there was an error during template creation. File already exists.")
+        }
     }
-
 }
 
 #' @title Get Writeable Library
@@ -199,9 +210,9 @@ create_custom_template <- function(input) {
 #' @return file path
 #' @examples
 #' \dontrun{
-#' if(interactive()) {
-#'   get_writeable_lib()
-#'  }
+#' if (interactive()) {
+#'     get_writeable_lib()
+#' }
 #' }
 #' @seealso
 #'  \code{\link[fs]{file_access}}

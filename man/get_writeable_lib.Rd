@@ -14,9 +14,9 @@ Returns the first writeable R library found.
 }
 \examples{
 \dontrun{
-if(interactive()) {
-  get_writeable_lib()
- }
+if (interactive()) {
+    get_writeable_lib()
+}
 }
 }
 \seealso{
